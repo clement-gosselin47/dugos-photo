@@ -231,7 +231,13 @@ function initHeroPin() {
     invalidateOnRefresh: true,
   });
 
-  // Flip 3D synchronisé avec le scroll (même plage)
+  // Flip 3D synchronisé avec le scroll (même plage) + fondu de l'image PENDANT
+  // la bascule : l'opacité de `.hero__img-wrap` (le parent, jamais `.hero__img-card`
+  // dont une opacité < 1 aplatirait le `preserve-3d` et casserait le flip) plonge
+  // vers ~0 autour du milieu du parcours (progress ≈ 0,5), là où les deux faces
+  // s'échangent. On ne voit donc jamais le changement de face, et le texte de
+  // l'intro (qu'elle traverse à ce moment) reste lisible.
+  const wrap = document.querySelector('.hero__img-wrap');
   gsap.to('.hero__img-card', {
     rotateY: -180,
     ease: 'none',
@@ -241,24 +247,11 @@ function initHeroPin() {
       endTrigger: '.featured',
       end: 'bottom bottom',
       scrub: 1.5,
+      onUpdate: self => {
+        const c = Math.abs(Math.cos(self.progress * Math.PI)); // 1 aux extrémités, 0 au centre
+        if (wrap) wrap.style.opacity = c < 0.42 ? '0.04' : String(Math.min(1, c));
+      },
     }
-  });
-
-  // Fondu de l'image quand elle chevauche le texte de la section « intro » :
-  // dès que l'intro entre dans le viewport, l'image s'efface presque
-  // totalement (texte lisible) ; elle revient quand on atteint « featured »
-  // (colonne centrale réservée) ou qu'on remonte vers le hero. Réversible.
-  const fadeCard = v => gsap.to('.hero__img-card',
-    { autoAlpha: v, duration: 0.45, ease: 'power2.out', overwrite: 'auto' });
-
-  ScrollTrigger.create({
-    trigger: '.intro',
-    start: 'top 78%',
-    end: 'bottom 24%',
-    onEnter:     () => fadeCard(0.04),
-    onLeave:     () => fadeCard(1),
-    onEnterBack: () => fadeCard(0.04),
-    onLeaveBack: () => fadeCard(1),
   });
 
   // Bug 1er chargement : tant que les polices ne sont pas encore appliquées,
