@@ -237,7 +237,9 @@ function initHeroPin() {
   // vers ~0 autour du milieu du parcours (progress ≈ 0,5), là où les deux faces
   // s'échangent. On ne voit donc jamais le changement de face, et le texte de
   // l'intro (qu'elle traverse à ce moment) reste lisible.
-  const wrap = document.querySelector('.hero__img-wrap');
+  const wrap  = document.querySelector('.hero__img-wrap');
+  const front = document.querySelector('.hero__img-card__front');
+  const back  = document.querySelector('.hero__img-card__back');
   gsap.to('.hero__img-card', {
     rotateY: -180,
     ease: 'none',
@@ -246,10 +248,17 @@ function initHeroPin() {
       start: 'top 180px',
       endTrigger: '.featured',
       end: 'bottom bottom',
-      scrub: 1.5,
-      onUpdate: self => {
-        const c = Math.abs(Math.cos(self.progress * Math.PI)); // 1 aux extrémités, 0 au centre
-        if (wrap) wrap.style.opacity = c < 0.42 ? '0.04' : String(Math.min(1, c));
+      scrub: 0.4,                       // suit le scroll de près : la bascule
+      onUpdate: self => {              //  tombe PILE à progress 0,5 (rotateY -90°)
+        const p = self.progress;
+        // Fondu du parent autour du milieu (masque totalement la bascule)
+        const c = Math.abs(Math.cos(p * Math.PI));   // 1 aux bords, 0 au centre
+        if (wrap) wrap.style.opacity = c < 0.5 ? '0.03' : String(Math.min(1, c));
+        // Bascule NETTE de la photo exactement à la moitié du parcours
+        if (front && back) {
+          front.style.opacity = p < 0.5 ? '1' : '0';
+          back.style.opacity  = p < 0.5 ? '0' : '1';
+        }
       },
     }
   });
