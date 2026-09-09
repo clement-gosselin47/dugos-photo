@@ -337,10 +337,12 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   }
   .categories {
     flex-direction: row;
+    min-height: 100vh;
+    min-height: 100dvh;
     height: auto;
-    align-items: flex-start;
+    align-items: center;          /* les 2 catégories centrées verticalement */
     justify-content: center;
-    padding: 104px 12px 40px;
+    padding: 80px 12px 56px;      /* garde de l'air sous la nav */
     gap: 10px;
   }
   .cat {
