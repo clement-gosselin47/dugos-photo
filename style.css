@@ -562,28 +562,21 @@ img:not([src]), img[src=""] { display: none; }
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
-  background: var(--black);   /* toute couture sous-pixel éventuelle passe en noir, invisible */
-  overflow: hidden;           /* borne le zoom au survol aux bords de la grille */
+  background: var(--black);   /* filet : une éventuelle couture sous-pixel reste sombre, invisible entre deux photos */
 }
 
 .gallery__item {
   position: relative;
   aspect-ratio: 4 / 6;
+  overflow: hidden;           /* le zoom au survol reste enfermé dans la case, comme dans un cadre */
   cursor: pointer;
-  /* pas d'overflow:hidden ici : l'image doit pouvoir déborder de 1px
-     horizontalement pour recouvrir les coutures sous-pixel entre colonnes */
 }
 
-/* Débord de 1px sur les 4 côtés : chaque photo recouvre légèrement ses
-   voisines, aucune couture sous-pixel ne peut apparaître (ni entre colonnes,
-   ni entre rangées). Le débord au pourtour de la grille est masqué par
-   overflow:hidden sur .gallery__grid. */
 .gallery__item img {
   position: absolute;
-  top: -1px;
-  left: -1px;
-  width: calc(100% + 2px);
-  height: calc(100% + 2px);
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
   transition: transform 0.5s ease;
