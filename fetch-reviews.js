@@ -9,7 +9,7 @@
  *
  * L'API Google ne renvoie qu'environ 5 avis par appel. Ce script FUSIONNE les
  * nouveaux avis avec ceux déjà enregistrés dans reviews.json : au fil des
- * exécutions (idéalement une fois par jour via l'hébergeur — voir AVIS-GOOGLE.md)
+ * exécutions (idéalement une fois par jour via l'hébergeur — voir docs/AVIS-GOOGLE.md)
  * le fichier accumule bien plus que 5 avis.
  */
 

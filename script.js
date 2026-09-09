@@ -323,7 +323,7 @@ if (hasGsap) gsap.from('.featured__right .featured__caption', {
 
 // ---- Avis Google (carrousel) ----
 // Les données viennent de reviews.json, régénéré par fetch-reviews.js
-// (voir AVIS-GOOGLE.md). Repli sur ces vrais avis si le fichier est absent.
+// (voir docs/AVIS-GOOGLE.md). Repli sur ces vrais avis si le fichier est absent.
 let reviews = [
   { author: 'Maurine Bardou', rating: 5, when: 'il y a un mois', text: 'Un immense merci à Laurent Dugos pour avoir immortalisé notre mariage d\'une manière aussi exceptionnelle ! Professionnalisme irréprochable, sympathique et à l\'écoute. Le résultat est tout simplement magnifique.' },
   { author: 'Manon Vaninetti', rating: 5, when: 'il y a un mois', text: 'Un immense merci à Laurent qui a été le super photographe pour notre mariage du 11 juillet 2026. Dès notre rencontre, nous avons apprécié sa gentillesse, sa réactivité et son professionnalisme.' },

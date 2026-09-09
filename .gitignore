@@ -28,3 +28,7 @@ _originals-bak/
 
 # Photos sources non utilisées par le site (gardées en local)
 _unused-source/
+
+# Documents de travail (gardés en local, pas dans le dépôt)
+Questionnaire_A_Propos_Dugos.docx
+*.docx
