@@ -117,6 +117,23 @@
 
   .c-scrollbar { display: none !important; }
 
+  /* --- En-tête transparent sur photo sombre (page Contact) ---
+     Fond toujours transparent (aucun bandeau blanc). En haut de page et menu
+     fermé : logo + barres du ☰ en blanc (sur la photo sombre). Dès qu'on
+     défile ou qu'on ouvre le menu plein écran : logo + ☰ repassent en foncé. */
+  .nav.nav--transparent {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+  .nav--transparent:not(.scrolled):not(.nav--open) .nav__logo-img {
+    filter: invert(1) !important;
+  }
+  .nav--transparent:not(.scrolled):not(.nav--open) .nav__toggle span {
+    background: #ffffff;
+  }
+
   /* --- Pied de page compact et dans les marges --- */
   .footer {
     padding-left: 20px !important;
