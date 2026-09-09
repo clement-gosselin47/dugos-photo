@@ -417,15 +417,15 @@ body.flow-mode .footer { display: none; }
   .nav { padding: 16px 24px; }
   .nav__links { gap: 20px; }
   .nav__link { font-size: 12px; }
-  .view-toggle { top: 64px; right: 24px; }
-  .gallery { padding-top: 132px; }
+  .view-toggle { top: 70px; right: 16px; }
+  .gallery { padding-top: 116px; }
   .gallery__grid {
     grid-template-columns: repeat(2, 1fr);
     column-gap: 12px;
     row-gap: 24px;
     padding: 0 16px 24px;
   }
-  .gallery__grid.flow { height: calc(100vh - 132px); }
+  .gallery__grid.flow { height: calc(100dvh - 116px); }
   .lightbox__img { max-height: 80vh; max-width: 92vw; }
   .lightbox__nav { padding: 0 8px; font-size: 40px; }
   .footer__main { padding-top: 24px; }
@@ -440,9 +440,9 @@ body.flow-mode .footer { display: none; }
   .nav__logo-img { height: 34px; }
   .nav__links { gap: 14px; }
   .nav__link { font-size: 11px; letter-spacing: 0.04em; }
-  .view-toggle { top: 148px; right: 16px; }
-  .gallery { padding-top: 208px; }
-  .gallery__grid.flow { height: calc(100vh - 208px); }
+  .view-toggle { top: 70px; right: 16px; }
+  .gallery { padding-top: 116px; }
+  .gallery__grid.flow { height: calc(100dvh - 116px); }
 }
 
 /* ============ NAV LISIBLE PARTOUT — bandeau verre dépoli ============ */
