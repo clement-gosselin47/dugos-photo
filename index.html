@@ -128,6 +128,8 @@
     </ul>
   </nav>
 
+  <main>
+
   <!-- ============ HERO ============ -->
   <section class="hero">
     <h1 class="hero__title">Photographe Marmande<br/>à votre service.</h1>
@@ -147,18 +149,28 @@
   </section>
 
   <!-- ============ INTRO ============ -->
-  <section class="intro">
+  <section class="intro" id="intro">
+    <h2 class="intro__title">Photographe de mariage et de portrait à Marmande</h2>
     <p class="intro__text">
-      Capturez les moments précieux de votre vie !<br />
-      Dugos photographie à Marmande (47200 – Lot-et-Garonne),<br />
-      au cœur du Sud Ouest.
+      Dugos Photographie, c'est Laurent Gosselin, photographe professionnel installé à
+      Caumont-sur-Garonne, aux portes de Marmande (Lot-et-Garonne). J'accompagne les couples
+      le jour de leur <strong>mariage</strong>, je réalise vos <strong>séances portrait</strong>
+      (couple, famille, grossesse, EVJF) et je photographie aussi les <strong>concerts</strong>
+      et la scène. J'interviens à Marmande, Tonneins, Aiguillon, Agen, Bordeaux et dans tout
+      le Sud-Ouest.
+    </p>
+    <p class="intro__text">
+      Une approche naturelle et discrète : capter l'instant présent, sans poses figées, dans
+      votre environnement. <a class="intro__link" href="galeries/index.html">Voir les galeries</a>
+      <span aria-hidden="true"> · </span>
+      <a class="intro__link" href="contact/index.html">Demander un devis</a>
     </p>
   </section>
 
   <!-- ============ ABOUT — textes gauche/droite de l'image ============ -->
-  <section class="featured" id="about">
+  <section class="featured" id="about" aria-labelledby="featured-title">
     <div class="featured__left">
-      <p class="featured__caption">Bonjour, moi c'est Laurent.</p>
+      <h2 class="featured__title" id="featured-title">Bonjour, moi c'est Laurent</h2>
       <p class="featured__caption featured__caption--gap">Professionnel passionné par l'art de capturer les moments les plus précieux de votre vie.</p>
     </div>
     <div class="featured__img-gap"></div>
@@ -168,7 +180,8 @@
   </section>
 
   <!-- ============ GALLERY GRID ============ -->
-  <section class="gallery">
+  <section class="gallery" aria-labelledby="gallery-title">
+    <h2 id="gallery-title" class="sr-only">Aperçu du portfolio — mariages et portraits</h2>
     <div class="gallery__grid">
       <div class="gallery__item"><img src="assets/gallery-1.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
       <div class="gallery__item"><img src="assets/gallery-2.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
@@ -177,32 +190,33 @@
       <div class="gallery__item"><img src="assets/gallery-5.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
       <div class="gallery__item"><img src="assets/gallery-6.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
       <div class="gallery__item"><img src="assets/gallery-7.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
-      <div class="gallery__item"><img src="assets/gallery-8.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
+      <div class="gallery__item"><img src="assets/gallery-8.jpg" alt="Photographie Dugos — mariage dans le Sud-Ouest" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
     </div>
+    <a class="gallery__more" href="galeries/index.html">Voir toutes les galeries<span aria-hidden="true"> →</span></a>
   </section>
 
   <!-- ============ AVIS GOOGLE ============ -->
-  <section class="testimonial" id="avis">
+  <section class="testimonial" id="avis" aria-labelledby="avis-title">
     <div class="testimonial__content">
-      <p class="testimonial__eyebrow">Avis clients</p>
+      <h2 class="testimonial__eyebrow" id="avis-title">Avis clients</h2>
 
       <div class="testimonial__summary">
         <span class="testimonial__stars testimonial__stars--lg" aria-hidden="true">★★★★★</span>
         <span class="testimonial__score">5,0</span>
-        <a class="testimonial__all" href="https://www.google.com/search?q=Dugos+Photographe+Marmande" target="_blank" rel="noopener">23 avis&nbsp;Google</a>
+        <a class="testimonial__all" href="https://maps.google.com/?cid=15146982758547639135" target="_blank" rel="noopener">24 avis&nbsp;Google</a>
       </div>
 
       <div class="testimonial__header">
         <button class="testimonial__arrow testimonial__arrow--prev" aria-label="Avis précédent">&#8249;</button>
-        <h3 class="testimonial__name">Marie &amp; Thomas</h3>
+        <h3 class="testimonial__name">Maurine Bardou</h3>
         <button class="testimonial__arrow testimonial__arrow--next" aria-label="Avis suivant">&#8250;</button>
       </div>
 
       <span class="testimonial__stars testimonial__review-stars" aria-hidden="true" hidden>★★★★★</span>
-      <p class="testimonial__text">Dugos a su capturer chaque moment de notre mariage avec une sensibilité extraordinaire. Nos photos sont bien plus que des souvenirs, ce sont des œuvres d'art.</p>
+      <p class="testimonial__text">Un immense merci à Laurent Dugos pour avoir immortalisé notre mariage d'une manière aussi exceptionnelle ! Professionnalisme irréprochable, sympathique et à l'écoute. Le résultat est tout simplement magnifique.</p>
       <p class="testimonial__when" hidden></p>
 
-      <a class="testimonial__cta" href="https://www.google.com/search?q=Dugos+Photographe+Marmande" target="_blank" rel="noopener">
+      <a class="testimonial__cta" href="https://search.google.com/local/writereview?placeid=ChIJI7YuY2gT86URX8syFpHkNNI" target="_blank" rel="noopener">
         Laisser un avis sur Google
         <span class="testimonial__cta-arrow" aria-hidden="true">→</span>
       </a>
@@ -210,12 +224,13 @@
   </section>
 
 
+  </main>
   </div><!-- end .page-content -->
 
   <!-- ============ FOOTER ============ -->
   <footer class="footer">
     <div class="footer__main">
-      <h2 class="footer__logo">DUGOS</h2>
+      <p class="footer__logo">DUGOS</p>
       <a class="footer__phone" href="mailto:laurent@dugos.fr">laurent@dugos.fr</a>
     </div>
     <div class="footer__bottom">
@@ -235,8 +250,8 @@
     </div>
   </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/gsap.min.js"></script>
+  <script src="assets/vendor/ScrollTrigger.min.js"></script>
   <script src="assets/smooth-scroll.js"></script>
   <script src="assets/site-nav.js"></script>
   <script src="script.js"></script>

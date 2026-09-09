@@ -299,11 +299,11 @@ if (hasGsap) gsap.from('.featured__right .featured__caption', {
 
 // ---- Avis Google (carrousel) ----
 // Les données viennent de reviews.json, régénéré par fetch-reviews.js
-// (voir AVIS-GOOGLE.md). Repli sur ces 3 exemples si le fichier est absent.
+// (voir AVIS-GOOGLE.md). Repli sur ces vrais avis si le fichier est absent.
 let reviews = [
-  { author: 'Marie & Thomas', rating: 5, when: '', text: 'Dugos a su capturer chaque moment de notre mariage avec une sensibilité extraordinaire. Nos photos sont bien plus que des souvenirs, ce sont des œuvres d\'art.' },
-  { author: 'Sophie L.', rating: 5, when: '', text: 'Une séance portrait inoubliable. L\'ambiance était détendue, les conseils précieux et le résultat final nous a laissés sans voix.' },
-  { author: 'Julien & Clara', rating: 5, when: '', text: 'Nous voulions des photos naturelles et authentiques. Dugos a parfaitement su saisir notre personnalité tout en créant des images d\'une beauté rare.' }
+  { author: 'Maurine Bardou', rating: 5, when: 'il y a un mois', text: 'Un immense merci à Laurent Dugos pour avoir immortalisé notre mariage d\'une manière aussi exceptionnelle ! Professionnalisme irréprochable, sympathique et à l\'écoute. Le résultat est tout simplement magnifique.' },
+  { author: 'Manon Vaninetti', rating: 5, when: 'il y a un mois', text: 'Un immense merci à Laurent qui a été le super photographe pour notre mariage du 11 juillet 2026. Dès notre rencontre, nous avons apprécié sa gentillesse, sa réactivité et son professionnalisme.' },
+  { author: 'Stephanie Barbe', rating: 5, when: 'il y a un mois', text: 'J\'ai fait appel à Laurent pour mon mariage. Très professionnel, à l\'écoute de son client, il prend des photos sur l\'instant sans qu\'on s\'en aperçoive et cela donne un super rendu. Je le recommande.' }
 ];
 
 let currentIndex = 0;
