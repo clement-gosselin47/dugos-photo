@@ -251,21 +251,20 @@ function initHeroPin() {
       scrub: 0.4,                       // suit le scroll de près : la bascule
       onUpdate: self => {              //  tombe PILE à progress 0,5 (rotateY -90°)
         const p = self.progress;
+        // Opacité = fonction CONTINUE et lisse de la progression (aucun palier,
+        // aucun saut) : 1 aux extrémités, ~0 au milieu où se fait la bascule.
+        // cos donne la vallée, smoothstep adoucit l'entrée/sortie.
         const c = Math.abs(Math.cos(p * Math.PI));   // 1 aux bords, 0 au centre
-        // L'image est TOTALEMENT masquée sur ~[0,27 ; 0,73] du parcours
-        // (visibility:hidden : aucun rectangle blanc résiduel), fondu doux
-        // de part et d'autre. La bascule des faces (progress 0,5) est donc
-        // invisible.
-        if (wrap) {
-          const hidden = c < 0.62;
-          wrap.style.opacity = hidden ? '0' : String(Math.min(1, c));
-          wrap.style.visibility = hidden ? 'hidden' : 'visible';
-        }
+        const t = Math.min(1, c / 0.72);
+        if (wrap) wrap.style.opacity = String(t * t * (3 - 2 * t));
+        // Bascule NETTE de la photo exactement à la moitié du parcours
         if (front && back) {
           front.style.opacity = p < 0.5 ? '1' : '0';
           back.style.opacity  = p < 0.5 ? '0' : '1';
         }
       },
+      onLeave:     () => wrap && (wrap.style.opacity = '1'),
+      onLeaveBack: () => wrap && (wrap.style.opacity = '1'),
     }
   });
 
