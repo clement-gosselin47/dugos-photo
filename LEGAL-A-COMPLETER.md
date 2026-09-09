@@ -28,19 +28,23 @@ Cherche chaque `[À COMPLÉTER]` dans `mentions-legales/index.html` et
 > site, mais **fortement recommandé** pour l'activité. Tu peux supprimer le bloc
 > assurance en attendant.
 
-## 2. Formspree (formulaire de contact) — accepter le contrat de sous-traitance
+## 2. Formspree (formulaire de contact) — sous-traitance → FAIT ✅
 
-Le formulaire passe par **Formspree** (société américaine). Le RGPD impose un
-accord de traitement des données (DPA) avec ce prestataire :
+Le formulaire passe par **Formspree** (société américaine). Vérifié le 2026-09-09 :
+sur l'**offre gratuite**, il n'existe **aucune page « GDPR » ni bouton pour signer
+un DPA** (menu *Account* = Account / Team / Billing / Domains uniquement). Les
+engagements de traitement des données de Formspree sont **inclus dans ses
+conditions d'utilisation** (acceptées à l'inscription) et sa politique de
+confidentialité.
 
-1. Connecte-toi sur **formspree.io** → *Account* / *Settings*.
-2. Cherche **« GDPR »** ou **« Data Processing Agreement »** et **accepte / signe** le DPA.
-3. Si l'option existe sur ton offre : active la **région de données Europe**.
-4. Une fois fait, retire le `[À FAIRE …]` dans `confidentialite/index.html` (§4).
+`confidentialite/index.html` §4 a été mis à jour en conséquence : mention de
+Formspree comme sous-traitant + liens vers ses conditions et sa politique de
+confidentialité. Le transfert UE→USA est déjà encadré au §5 (clauses
+contractuelles types / Data Privacy Framework). **Rien de plus à faire.**
 
-> Alternative si tu veux zéro transfert hors UE : passer à un service de
+> Alternative si tu veux un jour zéro transfert hors UE : passer à un service de
 > formulaire européen (ex. **Formspark**, **Basin**, ou un envoi via une petite
-> fonction serverless chez un hébergeur EU). Pas indispensable, mais possible.
+> fonction serverless chez un hébergeur EU). Pas indispensable.
 
 ## 3. Polices d'écriture → FAIT ✅
 
@@ -57,7 +61,7 @@ Pour régénérer les polices un jour (nouvelle graisse, etc.) :
 
 ## 4. Vérifications finales avant publication
 
-- [ ] Plus aucun `[À COMPLÉTER]` / `[À FAIRE]` ni surlignage jaune sur les 2 pages légales.
+- [ ] Plus aucun `[À COMPLÉTER]` ni surlignage jaune sur les mentions légales (le `[À FAIRE]` Formspree du §4 confidentialité est levé — cf. point 2).
 - [ ] Les liens « Mentions légales » et « Confidentialité » du pied de page fonctionnent depuis chaque page.
 - [ ] Le formulaire de contact affiche bien le bloc d'information RGPD au-dessus du bouton.
 - [ ] Test d'envoi du formulaire → l'e-mail arrive bien.
