@@ -326,26 +326,29 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .nav__links { gap: 20px; }
   .nav__link { font-size: 12px; }
 
-  /* La page défile : les 2 catégories s'empilent */
+  /* Mobile : les 2 catégories restent côte à côte */
   .page-content { height: auto; overflow: visible; }
   .categories {
-    flex-direction: column;
+    flex-direction: row;
     height: auto;
-    align-items: stretch;
-    padding-top: 96px;
-    gap: 8px;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 104px 12px 40px;
+    gap: 10px;
   }
   .cat {
-    padding: 0 20px 40px;
-    --cat-w: min(86vw, 400px);
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0;
+    --cat-w: 100%;
   }
-  .cat:not(:last-child) { padding-bottom: 48px; }
-  .cat__img { height: auto; }
-  .cat__title { margin-top: 15px; padding-top: 13px; }
-  .cat__name { font-size: 22px; }
+  .cat:not(:last-child) { padding-bottom: 0; }
+  .cat__img { width: 100%; height: auto; }
+  .cat__title { margin-top: 12px; padding-top: 10px; }
+  .cat__name { font-size: 16px; }
   /* Sur mobile : on garde le nom + la flèche, on masque « Voir la galerie » */
   .cat__cta { font-size: 0; letter-spacing: 0; gap: 0; }
-  .cat__arrow { font-size: 17px; }
+  .cat__arrow { font-size: 15px; }
 
   .footer__main { padding-top: 24px; }
   .footer__bottom { flex-direction: column; align-items: center; text-align: center; gap: 20px; padding: 24px 24px 0; }
