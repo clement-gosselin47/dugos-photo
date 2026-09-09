@@ -116,4 +116,45 @@
   }
 
   .c-scrollbar { display: none !important; }
+
+  /* --- Pied de page compact et dans les marges --- */
+  .footer {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-bottom: 26px !important;
+  }
+  .footer__main {
+    align-self: stretch !important;
+    width: 100%;
+    margin-right: 0 !important;
+    text-align: left;
+  }
+  .footer__logo {
+    font-size: clamp(36px, 12vw, 54px) !important;
+    letter-spacing: 0.02em !important;
+  }
+  .footer__phone {
+    font-size: 13px !important;
+    letter-spacing: 0.12em !important;
+    text-align: left !important;
+    margin-top: 8px !important;
+  }
+  .footer__bottom {
+    padding: 18px 0 0 !important;
+    gap: 12px !important;
+  }
+  .footer__socials {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 14px !important;
+  }
+  .footer__social-link { font-size: 11px !important; }
+  .footer__nav {
+    justify-content: center;
+    gap: 6px 12px !important;
+  }
+  .footer__nav-link {
+    font-size: 10.5px !important;
+    letter-spacing: 0.05em !important;
+  }
 }
