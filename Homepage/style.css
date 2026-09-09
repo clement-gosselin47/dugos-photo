@@ -609,6 +609,23 @@ img:not([src]), img[src=""] { display: none; }
 .testimonial__text::before { content: "\00AB\00A0"; }
 .testimonial__text::after  { content: "\00A0\00BB"; }
 
+.testimonial__more {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #999;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.testimonial__more:hover { color: var(--black); border-color: var(--black); }
+
 .testimonial__when {
   font-family: var(--font-sans);
   font-size: 12px;
@@ -801,8 +818,9 @@ img:not([src]), img[src=""] { display: none; }
   .nav { padding: 16px 24px; }
   .nav__links { gap: 24px; }
   .hero { padding-left: 24px; padding-right: 24px; }
+  .hero__title { font-size: clamp(44px, 12vw, 58px); }
   .hero__img-wrap { width: 220px; height: 400px; }
-  #heroImgPin { margin-top: -48px; }
+  #heroImgPin { margin-top: 6px; }
   .intro { padding: 60px 24px; }
   .featured { flex-direction: column; padding: 40px 24px 60px; gap: 32px; }
   .featured__img-gap { display: none; }

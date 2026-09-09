@@ -315,11 +315,44 @@ const whenEl   = document.querySelector('.testimonial__when');
 const stripQuotes = s => String(s || '').replace(/^["“«\s]+|["”»\s]+$/g, '').trim();
 const starString = n => '★'.repeat(Math.max(0, Math.min(5, Math.round(n || 0)))).padEnd(5, '☆');
 
+// ---- Repli des avis longs : tous affichés à la même longueur, « … plus » pour dérouler
+const REVIEW_MAX = 280;           // caractères affichés quand l'avis est replié
+let reviewExpanded = false;
+
+// Bouton « plus / moins » créé une fois, juste après le texte de l'avis
+const moreBtn = document.createElement('button');
+moreBtn.type = 'button';
+moreBtn.className = 'testimonial__more';
+moreBtn.hidden = true;
+textEl?.insertAdjacentElement('afterend', moreBtn);
+moreBtn.addEventListener('click', () => {
+  reviewExpanded = !reviewExpanded;
+  renderReviewText(reviews[currentIndex]);
+});
+
+function truncateAtWord(str, max) {
+  if (str.length <= max) return str;
+  let cut = str.slice(0, max);
+  const sp = cut.lastIndexOf(' ');
+  if (sp > max * 0.6) cut = cut.slice(0, sp);
+  return cut.replace(/[\s.,;:!?«»"'-]+$/, '') + '…';
+}
+
+function renderReviewText(r) {
+  if (!textEl || !r) return;
+  const full = stripQuotes(r.text);
+  const isLong = full.length > REVIEW_MAX;
+  textEl.textContent = (!isLong || reviewExpanded) ? full : truncateAtWord(full, REVIEW_MAX);
+  moreBtn.hidden = !isLong;
+  moreBtn.textContent = reviewExpanded ? 'voir moins' : 'voir plus';
+}
+
 function applyReview(index) {
   const r = reviews[index];
   if (!nameEl || !textEl || !r) return;
   nameEl.textContent = r.author;
-  textEl.textContent = stripQuotes(r.text);
+  reviewExpanded = false;            // on repart toujours replié en changeant d'avis
+  renderReviewText(r);
   if (starsEl) {
     if (r.rating) { starsEl.textContent = starString(r.rating); starsEl.hidden = false; }
     else starsEl.hidden = true;
@@ -333,7 +366,7 @@ function applyReview(index) {
 function updateTestimonial(index) {
   if (!nameEl || !textEl) return;
   if (!hasGsap) { applyReview(index); return; }
-  const anim = [nameEl, textEl, starsEl, whenEl].filter(Boolean);
+  const anim = [nameEl, textEl, moreBtn, starsEl, whenEl].filter(Boolean);
   gsap.to(anim, {
     opacity: 0, y: 10, duration: 0.25, ease: 'power2.in',
     onComplete: () => {

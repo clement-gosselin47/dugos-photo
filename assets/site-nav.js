@@ -27,6 +27,9 @@
     nav.classList.toggle('nav--open', open);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     btn.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    // Bloque le défilement de la page pendant que le menu plein écran est ouvert
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
   }
 
   btn.addEventListener('click', function (e) {
