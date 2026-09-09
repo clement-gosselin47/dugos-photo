@@ -9,7 +9,21 @@ pages, texte `[À COMPLÉTER : …]`) puis à retirer ces surlignages.
 
 ---
 
-## 1. Informations à renseigner (mentions légales + confidentialité)
+## 1. Informations à renseigner → FAIT ✅ (2026-09-09, commit a1fa6f9)
+
+Toutes les valeurs ont été saisies, plus aucun `[À COMPLÉTER]` ni surlignage :
+
+| Info | Valeur retenue |
+|---|---|
+| Adresse | 150 impasse du Plateau, **47430 Caumont-sur-Garonne** (confirmé) |
+| Téléphone | **06 40 38 85 31** (confirmé) |
+| SIREN / SIRET | **910 065 374** / **910 065 374 00019** |
+| Immatriculation | **Répertoire des Métiers et de l'Artisanat du Lot-et-Garonne (RM 47)**, n° 910 065 374 |
+| TVA | **TVA non applicable, art. 293 B du CGI** (franchise en base) |
+| Assurance RC Pro | **bloc retiré** — non souscrite |
+| Date de MAJ | **9 septembre 2026** (les 2 pages) — à re-dater si modif future |
+
+<details><summary>Détail d'origine (archive)</summary>
 
 Cherche chaque `[À COMPLÉTER]` dans `mentions-legales/index.html` et
 `confidentialite/index.html` et remplace-le par la vraie valeur.
@@ -27,6 +41,8 @@ Cherche chaque `[À COMPLÉTER]` dans `mentions-legales/index.html` et
 > Si tu n'as pas d'assurance RC Pro : ce n'est pas obligatoire pour publier le
 > site, mais **fortement recommandé** pour l'activité. Tu peux supprimer le bloc
 > assurance en attendant.
+
+</details>
 
 ## 2. Formspree (formulaire de contact) — sous-traitance → FAIT ✅
 
@@ -61,10 +77,10 @@ Pour régénérer les polices un jour (nouvelle graisse, etc.) :
 
 ## 4. Vérifications finales avant publication
 
-- [ ] Plus aucun `[À COMPLÉTER]` ni surlignage jaune sur les mentions légales (le `[À FAIRE]` Formspree du §4 confidentialité est levé — cf. point 2).
+- [x] Plus aucun `[À COMPLÉTER]` ni surlignage sur les pages légales (fait 2026-09-09, commit a1fa6f9 ; Formspree §4 levé, commit bdff6e1).
 - [ ] Les liens « Mentions légales » et « Confidentialité » du pied de page fonctionnent depuis chaque page.
 - [ ] Le formulaire de contact affiche bien le bloc d'information RGPD au-dessus du bouton.
-- [ ] Test d'envoi du formulaire → l'e-mail arrive bien.
+- [ ] **Test d'envoi du formulaire → l'e-mail arrive bien sur `laurent@dugos.fr`.** ← principal point restant
 - [x] Polices hébergées localement (point 3) — fait.
 - [ ] Faire relire les 2 textes par un professionnel (comptable / juriste) si possible — ils sont conçus pour être conformes mais ta situation exacte (statut, TVA, RCS) prime.
 
