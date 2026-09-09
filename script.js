@@ -253,7 +253,8 @@ function initHeroPin() {
         const p = self.progress;
         // Fondu du parent autour du milieu (masque totalement la bascule)
         const c = Math.abs(Math.cos(p * Math.PI));   // 1 aux bords, 0 au centre
-        if (wrap) wrap.style.opacity = c < 0.5 ? '0.03' : String(Math.min(1, c));
+        // plateau bas large : l'image reste quasi invisible sur ~[0,27 ; 0,73]
+        if (wrap) wrap.style.opacity = c < 0.62 ? '0.03' : String(Math.min(1, c));
         // Bascule NETTE de la photo exactement à la moitié du parcours
         if (front && back) {
           front.style.opacity = p < 0.5 ? '1' : '0';
