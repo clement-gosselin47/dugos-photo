@@ -278,10 +278,12 @@ img:not([src]), img[src=""] { display: none; }
 .intro {
   padding: 130px 48px;
   text-align: center;
-  /* Passe au-dessus de l'image du hero épinglée (#heroImgPin z-index:1) :
-     le texte reste lisible même pendant que l'image la traverse. */
+  /* Passe au-dessus de l'image du hero épinglée (#heroImgPin z-index:1) et
+     pose un voile blanc quasi opaque : le texte reste net même quand l'image
+     sombre la traverse (le voile ne se « voit » que sur fond sombre). */
   position: relative;
   z-index: 3;
+  background: rgba(255, 255, 255, 0.94);
 }
 
 .intro__title {
