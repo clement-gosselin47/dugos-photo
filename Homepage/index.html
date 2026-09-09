@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dugos Photographie – Photographe à Marmande</title>
+  <meta name="description" content="Dugos Photographie – Laurent, photographe professionnel à Marmande (47, Lot-et-Garonne). Mariages et portraits dans tout le Sud-Ouest." />
+  <link rel="icon" type="image/png" href="../LOGO/favicon.png" />
+  <link rel="icon" type="image/png" href="../LOGO/favicon-dark.png" media="(prefers-color-scheme: dark)" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../assets/fonts/fonts.css" />
+</head>
+<body>
+
+  <!-- ============ PRELOADER ============ -->
+  <div id="preloader">
+    <span class="pl__word pl__word--left">DUGOS</span>
+    <div class="pl__images">
+      <div class="pl__img pl__img--1"></div>
+      <div class="pl__img pl__img--2"></div>
+      <div class="pl__img pl__img--3"></div>
+      <div class="pl__img pl__img--4"></div>
+      <div class="pl__img pl__img--5"></div>
+    </div>
+    <span class="pl__word pl__word--right">PHOTOGRAPHIE</span>
+  </div>
+  <script>
+    /* Déjà vu cette session → on masque le preloader AVANT le rendu :
+       le navigateur ne télécharge alors pas les images de fond (~220 Ko). */
+    try {
+      if (sessionStorage.getItem('preloaderShown')) {
+        var __p = document.getElementById('preloader');
+        if (__p) __p.style.display = 'none';
+      }
+    } catch (e) {}
+  </script>
+
+  <div class="page-content">
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav">
+    <a href="index.html" class="nav__logo">
+      <img src="../LOGO/LOGO.png" alt="Dugos Photographie" class="nav__logo-img" />
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html" class="nav__link">Accueil</a></li>
+      <li><a href="../Categories/index.html" class="nav__link">Catégories</a></li>
+      <li><a href="../a-propos/index.html" class="nav__link">À propos</a></li>
+      <li><a href="../contact/index.html" class="nav__link">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <h1 class="hero__title">Photographe Marmande<br/>à votre service.</h1>
+    <div id="heroImgPin">
+      <div class="hero__img-wrap">
+        <!-- Carte 3D : recto + verso -->
+        <div class="hero__img-card">
+          <div class="hero__img-card__front">
+            <img class="hero__img-placeholder--portrait" src="../assets/hero-portrait.jpg" alt="Portrait noir et blanc, Dugos Photographie" width="280" height="520" fetchpriority="high" decoding="async" />
+          </div>
+          <div class="hero__img-card__back">
+            <img class="hero__img-placeholder--portrait-2" src="../assets/hero-portrait-back.jpg" alt="Laurent Gosselin, autoportrait, Dugos Photographie" width="280" height="520" fetchpriority="low" decoding="async" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTRO ============ -->
+  <section class="intro">
+    <p class="intro__text">
+      Capturez les moments précieux de votre vie !<br />
+      Dugos photographie à Marmande (47200 – Lot-et-Garonne),<br />
+      au cœur du Sud Ouest.
+    </p>
+  </section>
+
+  <!-- ============ ABOUT — textes gauche/droite de l'image ============ -->
+  <section class="featured" id="about">
+    <div class="featured__left">
+      <p class="featured__caption">Bonjour, moi c'est Laurent.</p>
+      <p class="featured__caption featured__caption--gap">Professionnel passionné par l'art de capturer les moments les plus précieux de votre vie.</p>
+    </div>
+    <div class="featured__img-gap"></div>
+    <div class="featured__right">
+      <p class="featured__caption">Capter l'instant présent, naturellement,<br />dans votre environnement.</p>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY GRID ============ -->
+  <section class="gallery">
+    <div class="gallery__grid">
+      <div class="gallery__item"><img src="../assets/gallery-1.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
+      <div class="gallery__item"><img src="../assets/gallery-2.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
+      <div class="gallery__item"><img src="../assets/gallery-3.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
+      <div class="gallery__item"><img src="../assets/gallery-4.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
+      <div class="gallery__item"><img src="../assets/gallery-5.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
+      <div class="gallery__item"><img src="../assets/gallery-6.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
+      <div class="gallery__item"><img src="../assets/gallery-7.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
+      <div class="gallery__item"><img src="../assets/gallery-8.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
+      <div class="gallery__item"><img src="../assets/gallery-9.jpg" alt="" width="800" height="1200" loading="lazy" decoding="async" /><div class="gallery__placeholder"></div></div>
+    </div>
+  </section>
+
+  <!-- ============ AVIS GOOGLE ============ -->
+  <section class="testimonial" id="avis">
+    <div class="testimonial__content">
+      <p class="testimonial__eyebrow">Avis clients</p>
+
+      <div class="testimonial__summary">
+        <span class="testimonial__stars testimonial__stars--lg" aria-hidden="true">★★★★★</span>
+        <span class="testimonial__score">5,0</span>
+        <a class="testimonial__all" href="https://www.google.com/search?q=Dugos+Photographe+Marmande" target="_blank" rel="noopener">23 avis&nbsp;Google</a>
+      </div>
+
+      <div class="testimonial__header">
+        <button class="testimonial__arrow testimonial__arrow--prev" aria-label="Avis précédent">&#8249;</button>
+        <h3 class="testimonial__name">Marie &amp; Thomas</h3>
+        <button class="testimonial__arrow testimonial__arrow--next" aria-label="Avis suivant">&#8250;</button>
+      </div>
+
+      <span class="testimonial__stars testimonial__review-stars" aria-hidden="true" hidden>★★★★★</span>
+      <p class="testimonial__text">Dugos a su capturer chaque moment de notre mariage avec une sensibilité extraordinaire. Nos photos sont bien plus que des souvenirs, ce sont des œuvres d'art.</p>
+      <p class="testimonial__when" hidden></p>
+
+      <a class="testimonial__cta" href="https://www.google.com/search?q=Dugos+Photographe+Marmande" target="_blank" rel="noopener">
+        Laisser un avis sur Google
+        <span class="testimonial__cta-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+
+  </div><!-- end .page-content -->
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__main">
+      <h2 class="footer__logo">DUGOS</h2>
+      <a class="footer__phone" href="mailto:laurent@dugos.fr">laurent@dugos.fr</a>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__socials">
+        <a href="https://www.instagram.com/dugos_photographie/" target="_blank" rel="noopener" class="footer__social-link">Instagram</a>
+        <a href="https://www.instagram.com/dansloeildugos/" target="_blank" rel="noopener" class="footer__social-link">Instagram Mariages</a>
+        <a href="https://www.facebook.com/p/Dugos-Photographie-100057557296207/" target="_blank" rel="noopener" class="footer__social-link">Facebook</a>
+      </div>
+      <nav class="footer__nav">
+        <a href="index.html" class="footer__nav-link">Accueil</a>
+        <a href="../Categories/index.html" class="footer__nav-link">Catégories</a>
+        <a href="../a-propos/index.html" class="footer__nav-link">À propos</a>
+        <a href="../contact/index.html" class="footer__nav-link">Contact</a>
+        <a href="../mentions-legales/index.html" class="footer__nav-link">Mentions légales</a>
+        <a href="../confidentialite/index.html" class="footer__nav-link">Confidentialité</a>
+      </nav>
+    </div>
+  </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="../assets/smooth-scroll.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

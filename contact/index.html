@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact – Dugos Photographie</title>
+  <meta name="description" content="Contactez Dugos Photographie à Marmande pour votre mariage, séance portrait ou tout autre projet photo." />
+  <link rel="icon" type="image/png" href="../LOGO/favicon.png" />
+  <link rel="icon" type="image/png" href="../LOGO/favicon-dark.png" media="(prefers-color-scheme: dark)" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../assets/fonts/fonts.css" />
+</head>
+<body>
+
+  <div class="page-content">
+
+    <!-- ============ NAVIGATION ============ -->
+    <nav class="nav">
+      <a href="../Homepage/index.html" class="nav__logo">
+        <img src="../LOGO/LOGO.png" alt="Dugos Photographie" class="nav__logo-img" />
+      </a>
+      <ul class="nav__links">
+        <li><a href="../Homepage/index.html" class="nav__link">Accueil</a></li>
+        <li><a href="../Categories/index.html" class="nav__link">Catégories</a></li>
+        <li><a href="../a-propos/index.html" class="nav__link">À propos</a></li>
+        <li><a href="index.html" class="nav__link">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- ============ CONTACT ============ -->
+    <main class="contact">
+
+      <h1 class="sr-only">Contact – Dugos Photographie</h1>
+
+      <div class="contact__left">
+        <img class="contact__img-placeholder" src="../assets/contact.jpg" alt="Mariée et demoiselles d'honneur, Dugos Photographie" fetchpriority="high" decoding="async" />
+      </div>
+
+      <form class="contact__form" id="contactForm" action="https://formspree.io/f/xjgjzzbj" method="POST">
+
+        <div class="form__row">
+          <div class="form__field">
+            <label class="form__label" for="name">Nom</label>
+            <input class="form__input" type="text" id="name" name="Nom" placeholder="Votre nom" autocomplete="name" required />
+          </div>
+          <div class="form__field">
+            <label class="form__label" for="email">Email</label>
+            <input class="form__input" type="email" id="email" name="Email" placeholder="votre@email.fr" autocomplete="email" required />
+          </div>
+        </div>
+
+        <div class="form__field">
+          <label class="form__label" for="subject">Sujet</label>
+          <select class="form__input form__select" id="subject" name="Sujet">
+            <option value="">Choisir une prestation</option>
+            <option value="Mariage">Mariage</option>
+            <option value="Portrait">Portrait</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+
+        <div class="form__field">
+          <label class="form__label" for="message">Message</label>
+          <textarea class="form__input form__textarea" id="message" name="Message" placeholder="Parlez-moi de votre projet…" required></textarea>
+        </div>
+
+        <!-- Anti-spam honeypot -->
+        <input type="text" name="_gotcha" style="display:none" />
+
+        <p class="form__rgpd">
+          Les champs obligatoires (nom, e-mail, message) servent uniquement à traiter votre demande —
+          base légale : intérêt légitime de Dugos Photographie. Vos données sont adressées à Laurent
+          Gosselin, conservées 12&nbsp;mois après le dernier échange, et ne sont ni cédées ni utilisées
+          à des fins commerciales. Vous disposez d'un droit d'accès, de rectification, d'effacement et
+          d'opposition en écrivant à <a href="mailto:laurent@dugos.fr">laurent@dugos.fr</a>. En savoir plus :
+          <a href="../confidentialite/index.html">politique de confidentialité</a>.
+        </p>
+
+        <button class="form__submit" type="submit" id="submitBtn">
+          <span class="btn__label">Envoyer</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </button>
+
+      </form>
+
+      <div class="form__success" id="formSuccess">
+        <p class="form__success-title">Message envoyé.</p>
+        <p class="form__success-text">Laurent vous répondra dans les plus brefs délais.</p>
+        <a href="../Homepage/index.html" class="form__back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          <span>Retour à l'accueil</span>
+        </a>
+      </div>
+
+    </main>
+
+  </div><!-- end .page-content -->
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__main">
+      <h2 class="footer__logo">DUGOS</h2>
+      <a class="footer__phone" href="mailto:laurent@dugos.fr">laurent@dugos.fr</a>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__socials">
+        <a href="https://www.instagram.com/dugos_photographie/" target="_blank" rel="noopener" class="footer__social-link">Instagram</a>
+        <a href="https://www.instagram.com/dansloeildugos/" target="_blank" rel="noopener" class="footer__social-link">Instagram Mariages</a>
+        <a href="https://www.facebook.com/p/Dugos-Photographie-100057557296207/" target="_blank" rel="noopener" class="footer__social-link">Facebook</a>
+      </div>
+      <nav class="footer__nav">
+        <a href="../Homepage/index.html" class="footer__nav-link">Accueil</a>
+        <a href="../Categories/index.html" class="footer__nav-link">Catégories</a>
+        <a href="../a-propos/index.html" class="footer__nav-link">À propos</a>
+        <a href="index.html" class="footer__nav-link">Contact</a>
+        <a href="../mentions-legales/index.html" class="footer__nav-link">Mentions légales</a>
+        <a href="../confidentialite/index.html" class="footer__nav-link">Confidentialité</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../assets/smooth-scroll.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

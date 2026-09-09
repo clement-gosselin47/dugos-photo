@@ -1,0 +1,529 @@
+/* ============ RESET & BASE ============ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0a0a0a;
+  --white: #ffffff;
+  --gray: #666666;
+  --light: #f5f3f0;
+  --font-serif: 'DM Serif Display', Georgia, serif;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+html { overflow-x: hidden; scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+
+/* ============ SCROLL PATH ============ */
+.scroll-path {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
+.block__imgs,
+.block__video,
+.block__img-single,
+.block__photos {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============ SCROLLBAR CUSTOM ============ */
+.c-scrollbar {
+  position: fixed;
+  right: 18px;
+  top: 12vh;
+  height: 76vh;
+  width: 1px;
+  background: rgba(10,10,10,0.1);
+  z-index: 50;
+  cursor: pointer;
+}
+.c-scrollbar__thumb {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  background: var(--black);
+  cursor: grab;
+}
+.c-scrollbar__thumb:hover,
+.c-scrollbar__thumb.dragging { cursor: grabbing; }
+.c-scrollbar:hover .c-scrollbar__thumb { background: #333; }
+
+body {
+  font-family: var(--font-sans);
+  color: var(--black);
+  background: var(--white);
+  padding-bottom: 40vh;
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+  background: var(--white);
+}
+
+/* ============ NAVIGATION ============ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: transparent;
+  transition: background 0.3s;
+}
+.nav__logo { text-decoration: none; display: flex; align-items: center; }
+.nav__logo-img { height: 44px; width: auto; object-fit: contain; }
+.nav__links { display: flex; gap: 40px; list-style: none; }
+.nav__link {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  color: var(--black);
+  text-transform: capitalize;
+  position: relative;
+  padding-bottom: 2px;
+}
+.nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 1px;
+  background: var(--black);
+  transition: width 0.3s ease;
+}
+.nav__link:hover::after { width: 100%; }
+
+/* ============ SCROLL REVEAL ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============ BLOCKS ALTERNANTS ============ */
+.block {
+  display: flex;
+  align-items: center;
+  min-height: 80vh;
+  padding: 120px 0;
+}
+
+.block--right {
+  justify-content: flex-end;
+}
+
+/* Côté texte */
+.block__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  padding: 0 80px;
+  gap: 32px;
+}
+
+.block__label {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.block__title {
+  font-family: var(--font-serif);
+  font-size: clamp(36px, 4.5vw, 72px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--black);
+}
+
+.block__body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--black);
+  max-width: 480px;
+}
+
+.block__body--serif {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Liste personnalité */
+.block__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.block__list li {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--black);
+  padding-bottom: 16px;
+}
+
+/* Valeurs */
+.block__values {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.block__value { display: flex; flex-direction: column; gap: 6px; }
+.block__value-num {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--gray);
+}
+.block__value-title {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--black);
+}
+
+/* Étapes approche */
+.block__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.block__step {
+  display: flex;
+  align-items: flex-start;
+}
+.block__step-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+
+
+/* Texte centré verticalement sur la hauteur de la photo */
+.block--laurent {
+  align-items: center;
+}
+
+/* ============ VIDEO ============ */
+.block__video {
+  width: 52%;
+  height: 880px;
+  flex-shrink: 0;
+  margin-left: 0;
+  overflow: hidden;
+  background: linear-gradient(160deg, #b8a99a 0%, #9c8878 30%, #6b5c50 60%, #3a2e28 100%);
+}
+.block__video video,
+.block__video img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* cadre sur le haut de l'image pour garder tête et buste bien visibles */
+  object-position: 50% 6%;
+}
+
+/* ============ IMAGE UNIQUE ============ */
+.block__img-single {
+  width: 26%;
+  aspect-ratio: 2 / 3;
+  flex-shrink: 0;
+  margin-left: 80px;
+  margin-right: auto;
+  overflow: hidden;
+  background: linear-gradient(160deg, #b8a99a 0%, #9c8878 30%, #6b5c50 60%, #3a2e28 100%);
+}
+.block__img-single img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ============ PHOTOS CÔTE À CÔTE ============ */
+.block__photos {
+  display: flex;
+  gap: 12px;
+  width: 58%;
+  flex-shrink: 0;
+  margin-right: 48px;
+}
+.block__photo {
+  flex: 1;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: linear-gradient(160deg, #b8a99a 0%, #9c8878 30%, #6b5c50 60%, #3a2e28 100%);
+}
+.block__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ============ IMAGES SUPERPOSÉES ============ */
+.block__imgs {
+  position: relative;
+  width: 50%;
+  height: 520px;
+  flex-shrink: 0;
+  margin-right: 100px;
+}
+
+.block__img {
+  position: absolute;
+  overflow: hidden;
+  background: linear-gradient(160deg, #b8a99a 0%, #9c8878 30%, #6b5c50 60%, #3a2e28 100%);
+}
+.block__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.block__img--back {
+  width: 380px;
+  height: 520px;
+  bottom: 0;
+  right: 40px;
+}
+
+.block__img--front {
+  width: 270px;
+  height: 370px;
+  bottom: -65px;
+  left: 160px;
+  background: linear-gradient(160deg, #c5bdb5 0%, #a09188 35%, #6e6058 65%, #3d3430 100%);
+  z-index: 2;
+}
+
+/* ============ CTA INLINE (dans block 5) ============ */
+.block__text--cta {
+  justify-content: center;
+  align-items: flex-start;
+}
+.block__cta-title--inline {
+  font-size: clamp(36px, 4vw, 60px);
+  line-height: 1;
+}
+
+/* ============ CTA PLEINE LARGEUR ============ */
+.block__cta {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  padding: 80px 48px;
+  background: var(--light);
+}
+.block__cta-sub {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.block__cta-title {
+  font-family: var(--font-serif);
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 400;
+  color: var(--black);
+  line-height: 1;
+}
+.block__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  background: var(--black);
+  color: var(--white);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  transition: opacity 0.2s;
+}
+.block__cta-btn:hover { opacity: 0.75; }
+.block__cta-btn svg { width: 16px; height: 16px; }
+
+/* ============ FOOTER ============ */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+  background: #0f0f0f;
+  overflow: hidden;
+  color: var(--black);
+  padding: 0 0 60px;
+  display: flex;
+  flex-direction: column;
+  height: 40vh;
+}
+
+.footer__main {
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.footer__bottom {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 48px;
+}
+
+.footer__socials { display: flex; gap: 36px; align-items: center; }
+
+.footer__social-link {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  color: #888;
+  text-transform: capitalize;
+}
+
+.footer__nav { display: flex; flex-wrap: wrap; gap: 22px; align-items: center; }
+
+.footer__nav-link {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--black);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: opacity 0.2s;
+}
+
+.footer__phone {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0.28em;
+  color: var(--black);
+  text-align: right;
+  margin-top: 4px;
+  display: block;
+  text-decoration: none;
+}
+
+.footer__logo {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 11.5vw;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 0.82;
+  margin: 0; padding: 0;
+  color: var(--black);
+  display: block;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Footer : fond photo noir & blanc --- */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url(../assets/cat-mariages.jpg) center 30% / cover no-repeat;
+  filter: grayscale(1) contrast(1.06) brightness(0.82);
+  z-index: 0;
+}
+.footer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10,10,10,0.34) 0%, rgba(10,10,10,0.66) 55%, rgba(10,10,10,0.8) 100%);
+  z-index: 0;
+}
+.footer__main,
+.footer__bottom { position: relative; z-index: 1; }
+.footer__logo { color: #fff; }
+.footer__phone { color: rgba(255,255,255,0.9); }
+.footer__nav-link { color: #fff; font-weight: 400; text-transform: capitalize; }
+.footer__social-link { color: rgba(255,255,255,0.6); }
+
+@media (max-width: 768px) {
+  .nav { padding: 16px 24px; }
+  .nav__links { gap: 20px; }
+  .nav__link { font-size: 12px; }
+  .block { flex-direction: column; padding: 60px 0; min-height: 0; gap: 40px; }
+  .block--right { justify-content: flex-start; }
+  .block__text { width: 100%; padding: 0 32px; }
+  .block__imgs { width: 100%; height: 440px; margin: 0; padding: 0 32px; }
+  .block__img--back { width: 65%; height: 100%; right: 32px; }
+  .block__img--front { width: 45%; height: 55%; left: 32px; bottom: -40px; }
+  .block__video { width: 100%; height: 380px; }
+  .block__img-single { width: 60%; margin: 0 auto; }
+  .block__photos { width: 100%; margin: 0; padding: 0 32px; }
+  .footer__main { padding-top: 24px; }
+  .footer__bottom { flex-direction: column; align-items: center; text-align: center; gap: 24px; padding: 24px 24px 0; }
+  .footer__phone { text-align: left; }
+}
+
+/* Nav compacte sur petit écran : logo au-dessus, liens en dessous */
+@media (max-width: 480px) {
+  .nav { flex-direction: column; gap: 10px; padding: 12px 16px; }
+  .nav__logo-img { height: 34px; }
+  .nav__links { gap: 14px; }
+  .nav__link { font-size: 11px; letter-spacing: 0.04em; }
+}
+
+/* ============ NAV LISIBLE PARTOUT — bandeau verre dépoli ============ */
+.nav {
+  background: rgba(255,255,255,0.6);
+  -webkit-backdrop-filter: blur(6px) saturate(1.15);
+  backdrop-filter: blur(6px) saturate(1.15);
+  box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+}
+/* Neutralise l'ancien état "scrolled" transparent (le bandeau reste dépoli) */
+.nav.scrolled {
+  background: rgba(255,255,255,0.6);
+  border-color: transparent;
+  box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+}
+
+/* ============ HEADER ESCAMOTABLE — caché pendant le scroll, revient à l'arrêt ============ */
+.nav {
+  transition: transform 0.35s ease, opacity 0.35s ease, background 0.3s;
+}
+.nav--hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}

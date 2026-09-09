@@ -1,0 +1,47 @@
+name: Avis Google
+
+# Rafraîchit Homepage/reviews.json avec les vrais avis Google, une fois par jour.
+# Nécessite 2 secrets de dépôt (Settings → Secrets and variables → Actions) :
+#   GOOGLE_PLACES_API_KEY  (obligatoire)
+#   GOOGLE_PLACE_ID        (recommandé — affiché par le script à sa 1re exécution)
+
+on:
+  schedule:
+    - cron: "17 6 * * *"   # tous les jours vers 6h17 UTC (~8h17 en France l'été)
+  workflow_dispatch: {}      # + bouton "Run workflow" pour lancer à la main
+
+permissions:
+  contents: write            # pour committer reviews.json
+
+concurrency:
+  group: avis-google
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Récupérer les avis
+        env:
+          GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+          GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
+          GOOGLE_PLACE_QUERY: Dugos Photographe Marmande
+        run: node fetch-reviews.js
+
+      - name: Committer si le fichier a changé
+        run: |
+          if git diff --quiet -- Homepage/reviews.json; then
+            echo "Aucun changement dans les avis."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Homepage/reviews.json
+          git commit -m "Mise à jour automatique des avis Google"
+          git push
