@@ -1,0 +1,101 @@
+/* ============================================================================
+   Dugos — En-tête mobile partagé (logo à gauche + menu ☰)
+   ----------------------------------------------------------------------------
+   Chargé sur toutes les pages APRÈS leur style.css : cette feuille ne modifie
+   que l'affichage ≤ 768 px et la scrollbar custom sur tactile. Le rendu
+   desktop reste inchangé.
+   ========================================================================== */
+
+/* Bouton ☰ — masqué sur desktop, injecté par site-nav.js dans .nav */
+.nav__toggle {
+  display: none;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: -8px -8px -8px 0;   /* garde la hauteur de nav, cible tactile large */
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 2;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav__toggle span {
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  height: 2px;
+  background: #0a0a0a;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+.nav__toggle span:nth-child(1) { top: 14px; }
+.nav__toggle span:nth-child(2) { top: 19px; }
+.nav__toggle span:nth-child(3) { top: 24px; }
+.nav--open .nav__toggle span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+.nav--open .nav__toggle span:nth-child(2) { opacity: 0; }
+.nav--open .nav__toggle span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+/* Scrollbar custom : inutile dès qu'on est sur un pointeur tactile */
+@media (hover: none) and (pointer: coarse) {
+  .c-scrollbar { display: none !important; }
+}
+
+@media (max-width: 768px) {
+  /* En-tête : logo à gauche, bouton à droite, sur une seule ligne */
+  .nav {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0 !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(1.15);
+    backdrop-filter: blur(8px) saturate(1.15);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08) !important;
+  }
+  /* Logo toujours foncé sur ce fond clair (certaines pages l'inversaient) */
+  .nav__logo-img { filter: none !important; }
+
+  .nav__toggle { display: block; }
+
+  /* Panneau des liens : déplié sous l'en-tête */
+  .nav__links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0 !important;
+    margin: 0;
+    padding: 6px 0 14px;
+    background: #ffffff;
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.10);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+  }
+  .nav--open .nav__links {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s;
+  }
+  .nav__links li { width: 100%; text-align: center; list-style: none; }
+  .nav__link {
+    display: block;
+    padding: 14px 24px;
+    font-size: 14px !important;
+    color: #0a0a0a !important;
+  }
+
+  /* L'en-tête escamotable ne doit pas emporter un menu ouvert */
+  .nav.nav--open {
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .c-scrollbar { display: none !important; }
+}
