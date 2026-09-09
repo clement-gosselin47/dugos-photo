@@ -52,13 +52,13 @@
   background-position: center;
 }
 
-.pl__img--1 { background-image: url('../assets/preloader-1.jpg'); }
-.pl__img--2 { background-image: url('../assets/preloader-2.jpg'); }
-.pl__img--3 { background-image: url('../assets/preloader-3.jpg'); }
-.pl__img--4 { background-image: url('../assets/preloader-4.jpg'); }
+.pl__img--1 { background-image: url('assets/preloader-1.jpg'); }
+.pl__img--2 { background-image: url('assets/preloader-2.jpg'); }
+.pl__img--3 { background-image: url('assets/preloader-3.jpg'); }
+.pl__img--4 { background-image: url('assets/preloader-4.jpg'); }
 /* La dernière image reste affichée pendant le morph : c'est exactement
    la photo du hero pour que le raccord soit invisible. */
-.pl__img--5 { background-image: url('../assets/hero-portrait.jpg'); }
+.pl__img--5 { background-image: url('assets/hero-portrait.jpg'); }
 
 /* ============ RESET & BASE ============ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -854,7 +854,7 @@ img:not([src]), img[src=""] { display: none; }
   content: "";
   position: absolute;
   inset: 0;
-  background: url(../assets/cat-mariages.jpg) center 30% / cover no-repeat;
+  background: url(assets/cat-mariages.jpg) center 30% / cover no-repeat;
   filter: grayscale(1) contrast(1.06) brightness(0.82);
   z-index: 0;
 }
