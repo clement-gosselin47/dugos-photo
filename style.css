@@ -566,14 +566,16 @@ img:not([src]), img[src=""] { display: none; }
      horizontalement pour recouvrir les coutures sous-pixel entre colonnes */
 }
 
-/* Débord horizontal de 1px de chaque côté : les photos voisines se recouvrent
-   d'un cheveu, aucune ligne parasite n'apparaît entre les colonnes. */
+/* Débord de 1px sur les 4 côtés : chaque photo recouvre légèrement ses
+   voisines, aucune couture sous-pixel ne peut apparaître (ni entre colonnes,
+   ni entre rangées). Le débord au pourtour de la grille est masqué par
+   overflow:hidden sur .gallery__grid. */
 .gallery__item img {
   position: absolute;
-  top: 0;
+  top: -1px;
   left: -1px;
   width: calc(100% + 2px);
-  height: 100%;
+  height: calc(100% + 2px);
   object-fit: cover;
   display: block;
   transition: transform 0.5s ease;
