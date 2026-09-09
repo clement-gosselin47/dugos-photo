@@ -553,29 +553,43 @@ img:not([src]), img[src=""] { display: none; }
 .gallery__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0;
+  column-gap: 0;
+  row-gap: 1px;               /* la seule ligne grise fine, entre les 2 rangées */
+  background: #d2d2d2;        /* couleur visible dans ce row-gap */
+  overflow: hidden;           /* borne le zoom au survol aux bords de la grille */
 }
 
 .gallery__item {
   position: relative;
   aspect-ratio: 4 / 6;
-  overflow: hidden;
   cursor: pointer;
+  /* pas d'overflow:hidden ici : l'image doit pouvoir déborder de 1px
+     horizontalement pour recouvrir les coutures sous-pixel entre colonnes */
 }
 
+/* Débord horizontal de 1px de chaque côté : les photos voisines se recouvrent
+   d'un cheveu, aucune ligne parasite n'apparaît entre les colonnes. Aucun
+   débord vertical (top:0 / height:100%) pour ne pas masquer le row-gap gris. */
 .gallery__item img {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: 100%;
+  object-fit: cover;
+  display: block;
   transition: transform 0.5s ease;
 }
 
 .gallery__item:hover img { transform: scale(1.04); }
 
+/* Cellule pendant le chargement : reste SOUS la photo (flux normal, pas
+   d'absolute). Sans bordure — l'ancienne bordure #bbb dessinait le trait
+   clair parasite autour des photos. */
 .gallery__placeholder {
   width: 100%;
   height: 100%;
-  background: var(--grey-mid);
-  border: 1px solid #bbb;
+  background: #1c1c1c;
 }
 
 /* ============ TESTIMONIAL ============ */
