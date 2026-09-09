@@ -40,6 +40,9 @@
   .c-scrollbar { display: none !important; }
 }
 
+/* Pied de page : réseaux + liens un peu plus bas (moins de vide sous la rangée) */
+.footer { padding-bottom: 28px; }
+
 /* Crédit « création du site » — discret, tout en bas du pied de page (toutes tailles) */
 .footer__credit {
   margin: 14px 48px 0;
