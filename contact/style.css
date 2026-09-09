@@ -174,7 +174,7 @@ body {
   border-radius: 0;
 }
 
-.form__input::placeholder { color: #bbb; }
+.form__input::placeholder { color: #767676; }
 
 .form__input:focus { border-bottom-color: var(--black); }
 
