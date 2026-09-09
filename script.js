@@ -244,23 +244,22 @@ function initHeroPin() {
     }
   });
 
-  // Fondu de l'image pendant qu'elle chevauche le texte de la section « intro » :
-  // visible sur le hero → quasi invisible sur l'intro (texte lisible) → revient
-  // sur « featured » (où une colonne centrale lui est réservée). Réversible (scrub).
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: pin,
-      start: 'top 180px',
-      endTrigger: '.featured',
-      end: 'bottom bottom',
-      scrub: 1.2,
-    }
-  })
-    .to('.hero__img-card', { autoAlpha: 1,    ease: 'none', duration: 0.06 })
-    .to('.hero__img-card', { autoAlpha: 0.04, ease: 'power1.out', duration: 0.10 })
-    .to('.hero__img-card', { autoAlpha: 0.04, ease: 'none', duration: 0.58 })
-    .to('.hero__img-card', { autoAlpha: 1,    ease: 'power1.in', duration: 0.12 })
-    .to('.hero__img-card', { autoAlpha: 1,    ease: 'none', duration: 0.14 });
+  // Fondu de l'image quand elle chevauche le texte de la section « intro » :
+  // dès que l'intro entre dans le viewport, l'image s'efface presque
+  // totalement (texte lisible) ; elle revient quand on atteint « featured »
+  // (colonne centrale réservée) ou qu'on remonte vers le hero. Réversible.
+  const fadeCard = v => gsap.to('.hero__img-card',
+    { autoAlpha: v, duration: 0.45, ease: 'power2.out', overwrite: 'auto' });
+
+  ScrollTrigger.create({
+    trigger: '.intro',
+    start: 'top 78%',
+    end: 'bottom 24%',
+    onEnter:     () => fadeCard(0.04),
+    onLeave:     () => fadeCard(1),
+    onEnterBack: () => fadeCard(0.04),
+    onLeaveBack: () => fadeCard(1),
+  });
 
   // Bug 1er chargement : tant que les polices ne sont pas encore appliquées,
   // le titre et les textes s'affichent avec une police de secours (taille/hauteur
