@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Met à jour Homepage/reviews.json avec les vrais avis Google (Places API v1).
+ * Met à jour reviews.json avec les vrais avis Google (Places API v1).
  *
  *   node fetch-reviews.js
  *
@@ -46,7 +46,7 @@ try {
 const API_KEY  = process.env.GOOGLE_PLACES_API_KEY;
 const QUERY    = process.env.GOOGLE_PLACE_QUERY || 'Dugos Photographe Marmande';
 const PLACE_ID = process.env.GOOGLE_PLACE_ID || ''; // optionnel : évite la recherche texte
-const OUT      = resolve(__dir, 'Homepage', 'reviews.json');
+const OUT      = resolve(__dir, 'reviews.json');
 
 if (!API_KEY || API_KEY === 'your_google_api_key_here') {
   console.error('Erreur : GOOGLE_PLACES_API_KEY absent (ni dans .env, ni dans l\'environnement).');
@@ -152,7 +152,7 @@ function loadExistingItems() {
   };
 
   writeFileSync(OUT, JSON.stringify(payload, null, 2) + '\n', 'utf8');
-  console.log(`✓ ${merged.length} avis dans Homepage/reviews.json  (note ${payload.rating} · ${payload.count} avis Google)`);
+  console.log(`✓ ${merged.length} avis dans reviews.json  (note ${payload.rating} · ${payload.count} avis Google)`);
   if (placeId) console.log(`  Place ID : ${placeId}`);
   console.log(`  Lien « laisser un avis » : ${payload.writeUrl || '(placeId manquant)'}`);
 })().catch(err => {

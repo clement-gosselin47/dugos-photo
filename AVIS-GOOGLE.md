@@ -1,11 +1,11 @@
 # Avis Google sur le site
 
 Les avis affichés dans la section « Avis clients » de la page d'accueil viennent
-du fichier **`Homepage/reviews.json`**. Ce fichier est régénéré par le script
+du fichier **`reviews.json`**. Ce fichier est régénéré par le script
 **`fetch-reviews.js`** à partir de l'API Google Places.
 
 ```
-Google  ──►  fetch-reviews.js  ──►  Homepage/reviews.json  ──►  la page l'affiche
+Google  ──►  fetch-reviews.js  ──►  reviews.json  ──►  la page l'affiche
 ```
 
 Tant que le script n'a jamais tourné, la page montre 3 avis d'exemple + la note
@@ -90,7 +90,7 @@ jobs:
       - run: |
           git config user.name "avis-bot"
           git config user.email "bot@dugos"
-          git add Homepage/reviews.json
+          git add reviews.json
           git commit -m "MAJ avis Google" || echo "rien à committer"
           git push
 ```

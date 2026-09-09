@@ -11,7 +11,7 @@ Nous nous engageons à traiter tout signalement sous **72 heures**.
 
 - Aucune clé API, mot de passe ou token ne doit apparaître dans le code source
 - Les clés sont stockées dans `.env` (jamais commité, voir `.gitignore`)
-- Les avis Google sont pré-chargés via `fetch-reviews.js` (script local) → `Homepage/reviews.json`
+- Les avis Google sont pré-chargés via `fetch-reviews.js` (script local) → `reviews.json`
 
 ## Mise à jour des dépendances
 
