@@ -327,7 +327,14 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .nav__link { font-size: 12px; }
 
   /* Mobile : les 2 catégories restent côte à côte */
-  .page-content { height: auto; overflow: visible; }
+  /* Le fond blanc remplit tout l'écran : le footer fixe reste caché
+     derrière et ne se découvre qu'en défilant vers le bas. */
+  .page-content {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+  }
   .categories {
     flex-direction: row;
     height: auto;
