@@ -105,14 +105,19 @@ body {
 .nav__link:hover::after { width: 100%; }
 
 /* ============ SCROLL REVEAL ============ */
-.reveal {
+/* Le contenu est visible par défaut ; on ne l'anime que si le JS a posé
+   la classe `js` sur <html> (progressive enhancement). */
+.js .reveal {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
-.reveal.revealed {
+.js .reveal.revealed {
   opacity: 1;
   transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; transform: none; transition: none; }
 }
 
 /* ============ BLOCKS ALTERNANTS ============ */
@@ -482,15 +487,34 @@ body {
   .nav { padding: 16px 24px; }
   .nav__links { gap: 20px; }
   .nav__link { font-size: 12px; }
-  .block { flex-direction: column; padding: 60px 0; min-height: 0; gap: 40px; }
+  .block { flex-direction: column; padding: 56px 0; min-height: 0; gap: 32px; }
+  .block:first-of-type { padding-top: 108px; }   /* dégage la nav fixe */
   .block--right { justify-content: flex-start; }
-  .block__text { width: 100%; padding: 0 32px; }
-  .block__imgs { width: 100%; height: 440px; margin: 0; padding: 0 32px; }
-  .block__img--back { width: 65%; height: 100%; right: 32px; }
-  .block__img--front { width: 45%; height: 55%; left: 32px; bottom: -40px; }
-  .block__video { width: 100%; height: 380px; }
-  .block__img-single { width: 60%; margin: 0 auto; }
-  .block__photos { width: 100%; margin: 0; padding: 0 32px; }
+  .block__text { width: 100%; padding: 0 24px; gap: 22px; }
+
+  /* Images : empilées, pleine largeur, plus de superposition/décalages */
+  .block__imgs {
+    position: static;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .block__img {
+    position: static;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    height: auto;
+    bottom: auto; left: auto; right: auto;
+  }
+  .block__img--front { aspect-ratio: 3 / 4; width: 78%; align-self: flex-end; }
+
+  .block__video { width: 100%; height: auto; aspect-ratio: 4 / 5; }
+  .block__img-single { width: 100%; margin: 0; padding: 0 24px; }
+  .block__photos { width: 100%; margin: 0; padding: 0 24px; }
   .footer__main { padding-top: 24px; }
   .footer__bottom { flex-direction: column; align-items: center; text-align: center; gap: 24px; padding: 24px 24px 0; }
   .footer__phone { text-align: left; }

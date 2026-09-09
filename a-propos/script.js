@@ -60,13 +60,31 @@ const revealObserver = new IntersectionObserver((entries) => {
       revealObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.15 });
+}, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
 
-document.querySelectorAll('.block__label, .block__title, .block__body, .block__list, .block__values, .block__steps, .block__cta-sub, .block__cta-title, .block__cta-btn').forEach((el, i) => {
+const revealEls = document.querySelectorAll('.block__label, .block__title, .block__body, .block__list, .block__values, .block__steps, .block__cta-sub, .block__cta-title, .block__cta-btn');
+revealEls.forEach((el, i) => {
   el.style.transitionDelay = `${(i % 4) * 80}ms`;
   el.classList.add('reveal');
   revealObserver.observe(el);
 });
+
+// Filet de sécurité : révèle tout de suite ce qui est déjà dans le viewport
+// (l'IntersectionObserver peut manquer les éléments présents au chargement),
+// et révèle tout au bout de 2 s si le JS d'observation n'a rien fait.
+function revealVisible() {
+  revealEls.forEach(el => {
+    if (el.classList.contains('revealed')) return;
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) {
+      el.classList.add('revealed');
+      revealObserver.unobserve(el);
+    }
+  });
+}
+requestAnimationFrame(revealVisible);
+window.addEventListener('load', revealVisible);
+setTimeout(() => revealEls.forEach(el => el.classList.add('revealed')), 2000);
 
 // ---- Parallax images (throttlé en rAF : pas de layout-thrash pendant le scroll) ----
 (function () {
