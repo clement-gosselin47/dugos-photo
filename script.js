@@ -256,11 +256,11 @@ function initHeroPin() {
       scrub: 1.2,
     }
   })
-    .to('.hero__img-card', { autoAlpha: 1,    ease: 'none', duration: 0.14 })
-    .to('.hero__img-card', { autoAlpha: 0.04, ease: 'power1.out', duration: 0.13 })
-    .to('.hero__img-card', { autoAlpha: 0.04, ease: 'none', duration: 0.40 })
-    .to('.hero__img-card', { autoAlpha: 1,    ease: 'power1.in', duration: 0.13 })
-    .to('.hero__img-card', { autoAlpha: 1,    ease: 'none', duration: 0.20 });
+    .to('.hero__img-card', { autoAlpha: 1,    ease: 'none', duration: 0.06 })
+    .to('.hero__img-card', { autoAlpha: 0.04, ease: 'power1.out', duration: 0.10 })
+    .to('.hero__img-card', { autoAlpha: 0.04, ease: 'none', duration: 0.58 })
+    .to('.hero__img-card', { autoAlpha: 1,    ease: 'power1.in', duration: 0.12 })
+    .to('.hero__img-card', { autoAlpha: 1,    ease: 'none', duration: 0.14 });
 
   // Bug 1er chargement : tant que les polices ne sont pas encore appliquées,
   // le titre et les textes s'affichent avec une police de secours (taille/hauteur

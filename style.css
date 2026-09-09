@@ -278,6 +278,10 @@ img:not([src]), img[src=""] { display: none; }
 .intro {
   padding: 130px 48px;
   text-align: center;
+  /* Passe au-dessus de l'image du hero épinglée (#heroImgPin z-index:1) :
+     le texte reste lisible même pendant que l'image la traverse. */
+  position: relative;
+  z-index: 3;
 }
 
 .intro__title {
