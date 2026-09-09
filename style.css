@@ -553,9 +553,8 @@ img:not([src]), img[src=""] { display: none; }
 .gallery__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 0;
-  row-gap: 1px;               /* la seule ligne grise fine, entre les 2 rangées */
-  background: #d2d2d2;        /* couleur visible dans ce row-gap */
+  gap: 0;
+  background: var(--black);   /* toute couture sous-pixel éventuelle passe en noir, invisible */
   overflow: hidden;           /* borne le zoom au survol aux bords de la grille */
 }
 
@@ -568,8 +567,7 @@ img:not([src]), img[src=""] { display: none; }
 }
 
 /* Débord horizontal de 1px de chaque côté : les photos voisines se recouvrent
-   d'un cheveu, aucune ligne parasite n'apparaît entre les colonnes. Aucun
-   débord vertical (top:0 / height:100%) pour ne pas masquer le row-gap gris. */
+   d'un cheveu, aucune ligne parasite n'apparaît entre les colonnes. */
 .gallery__item img {
   position: absolute;
   top: 0;
