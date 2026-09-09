@@ -244,6 +244,24 @@ function initHeroPin() {
     }
   });
 
+  // Fondu de l'image pendant qu'elle chevauche le texte de la section « intro » :
+  // visible sur le hero → quasi invisible sur l'intro (texte lisible) → revient
+  // sur « featured » (où une colonne centrale lui est réservée). Réversible (scrub).
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: pin,
+      start: 'top 180px',
+      endTrigger: '.featured',
+      end: 'bottom bottom',
+      scrub: 1.2,
+    }
+  })
+    .to('.hero__img-card', { autoAlpha: 1,    ease: 'none', duration: 0.14 })
+    .to('.hero__img-card', { autoAlpha: 0.04, ease: 'power1.out', duration: 0.13 })
+    .to('.hero__img-card', { autoAlpha: 0.04, ease: 'none', duration: 0.40 })
+    .to('.hero__img-card', { autoAlpha: 1,    ease: 'power1.in', duration: 0.13 })
+    .to('.hero__img-card', { autoAlpha: 1,    ease: 'none', duration: 0.20 });
+
   // Bug 1er chargement : tant que les polices ne sont pas encore appliquées,
   // le titre et les textes s'affichent avec une police de secours (taille/hauteur
   // différentes), donc la position de .featured mesurée ici est fausse. Les polices
