@@ -10,6 +10,42 @@ Trois volets : **parcours utilisateur (UX)**, **technique (dév / perf / accessi
 
 ---
 
+## ✅ Corrections déjà appliquées (2026-09-09, commits a1afa46 → 42d213f)
+
+- **Arborescence aplatie** : accueil servi à la racine `/` ; `Homepage/` → racine,
+  `Categories/` → `galeries/` (+ `galeries/mariages/`, `galeries/portraits/`) ;
+  libellé menu « Catégories » → « Galeries » ; tous les chemins réécrits.
+- **SEO technique** : `robots.txt` + `sitemap.xml` + `404.html` ; `<link canonical>`
+  auto-référent + `theme-color` sur les 8 pages ; `<title>` réécrits (intention
+  locale) ; `apple-touch-icon`.
+- **Open Graph + Twitter Card** complets sur chaque page + `assets/og-cover.jpg`
+  (1200×630).
+- **JSON-LD** : `ProfessionalService` + adresse + geo + `areaServed` + `sameAs`
+  + `AggregateRating` 5/24 + 2 avis sur l'accueil ; `BreadcrumbList` sur les
+  galeries. (JSON validé ; `aggregateRating` **à valider** dans le Rich Results
+  Test — Google peut être strict sur l'agrégation d'avis.)
+- **Structure** : `<main>` ajouté partout ; footer « DUGOS » `<h2>` → `<p>` ;
+  hiérarchie de titres h1 > h2 > h3 propre (h2 sur intro, « Bonjour… », galerie
+  sr-only, « Avis clients »).
+- **Contenu accueil** étoffé (services, villes couvertes, approche, liens
+  galeries + devis) ; « 23 avis » → « 24 » ; faux témoignage remplacé par un vrai.
+- **`alt`** contextuels sur ~150 photos de portfolio + homepage + vignettes catégorie.
+- **GSAP auto-hébergé** (`assets/vendor/`) : plus aucune ressource tierce ;
+  politique de confidentialité mise à jour.
+- **Page À propos mobile réparée** (photos empilées, titre visible, filet de
+  révélation JS).
+- **Vignettes galerie allégées** (21 Mo → 10,6 Mo, 700 px / q72).
+- **Contrastes** de texte remontés ; workflow avis bumpé (actions v5, Node 22).
+- `serve.json` retiré ; `.claude/launch.json` → `npx serve -C`.
+
+**⚠️ Reste à faire** — voir §4. En priorité : **partie légale à remplir + test
+d'envoi du formulaire** ; **remplacer l'URL de base** `clement-gosselin47.github.io/dugos-photo`
+partout (canonical, OG, sitemap, robots, JSON-LD, 404) quand `dugos.fr` sera
+branché + ajouter un fichier `CNAME` ; **Google Search Console** + soumission du
+sitemap ; **revendiquer la fiche Google Business**.
+
+---
+
 ## 0. Synthèse
 
 Le site est **propre, rapide à charger, cohérent visuellement** et l'essentiel
