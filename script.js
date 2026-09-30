@@ -240,15 +240,30 @@ function initHeroPin() {
   // Flip 3D synchronisé avec le scroll (même plage) + fondu de l'image PENDANT
   // la bascule : l'opacité de `.hero__img-wrap` (le parent, jamais `.hero__img-card`
   // dont une opacité < 1 aplatirait le `preserve-3d` et casserait le flip) plonge
-  // vers ~0 autour du milieu du parcours (progress ≈ 0,5), là où les deux faces
-  // s'échangent. On ne voit donc jamais le changement de face, et le texte de
-  // l'intro (qu'elle traverse à ce moment) reste lisible.
+  // vers un plancher discret (MIN_OPACITY) autour du milieu du parcours, là où les
+  // deux faces s'échangent : on devine le mécanisme sans gêner la lecture du texte
+  // de l'intro qu'elle traverse à ce moment.
   const wrap  = document.querySelector('.hero__img-wrap');
   const front = document.querySelector('.hero__img-card__front');
   const back  = document.querySelector('.hero__img-card__back');
+  const introTexts = document.querySelectorAll('.intro__text');
+  const introLast  = introTexts[introTexts.length - 1];
+  const REVEAL_EARLY = 60;  // le fondu démarre quand le bas du texte est encore 60px sous le haut de la carte
+  const REVEAL_PX    = 300; // durée du fondu d'apparition (px de scroll) : lent et doux
+  const MIN_OPACITY  = 0.15; // jamais totalement invisible : on devine la rotation derrière le texte
+  const card = document.querySelector('.hero__img-card');
   gsap.to('.hero__img-card', {
     rotateY: -180,
     ease: 'none',
+    // Échange des faces calé sur la rotation RÉELLE (scrub = léger retard sur le
+    // scroll) : il se fait pile quand la carte est de profil (-90°), donc invisible
+    // même si l'image reste légèrement visible pendant la bascule.
+    onUpdate: () => {
+      if (!front || !back) return;
+      const showFront = gsap.getProperty(card, 'rotateY') > -90;
+      front.style.opacity = showFront ? '1' : '0';
+      back.style.opacity  = showFront ? '0' : '1';
+    },
     scrollTrigger: {
       trigger: pin,
       start: 'top 180px',
@@ -262,12 +277,17 @@ function initHeroPin() {
         // cos donne la vallée, smoothstep adoucit l'entrée/sortie.
         const c = Math.abs(Math.cos(p * Math.PI));   // 1 aux bords, 0 au centre
         const t = Math.min(1, c / 0.72);
-        if (wrap) wrap.style.opacity = String(t * t * (3 - 2 * t));
-        // Bascule NETTE de la photo exactement à la moitié du parcours
-        if (front && back) {
-          front.style.opacity = p < 0.5 ? '1' : '0';
-          back.style.opacity  = p < 0.5 ? '0' : '1';
+        let o = t * t * (3 - 2 * t);
+        // Après la bascule, la face arrière ne réapparaît qu'une fois le texte
+        // de l'intro passé au-dessus de la carte (sinon elle le recouvre).
+        if (p >= 0.5 && introLast) {
+          const gap = pin.getBoundingClientRect().top - introLast.getBoundingClientRect().bottom;
+          const g = Math.max(0, Math.min(1, (gap + REVEAL_EARLY) / REVEAL_PX));
+          o *= g * g * g * (g * (g * 6 - 15) + 10);   // smootherstep : entrée/sortie très douces
         }
+        // Plancher : l'image reste légèrement visible pendant la traversée du texte
+        o = MIN_OPACITY + (1 - MIN_OPACITY) * o;
+        if (wrap) wrap.style.opacity = String(o);
       },
       onLeave:     () => wrap && (wrap.style.opacity = '1'),
       onLeaveBack: () => wrap && (wrap.style.opacity = '1'),
