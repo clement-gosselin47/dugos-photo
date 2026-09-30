@@ -34,14 +34,20 @@ function signalPreloaderDone() {
   }
 
   // Déjà vu cette session → skip preloader
-  if (sessionStorage.getItem('preloaderShown')) {
+  let seen = false;
+  try { seen = !!sessionStorage.getItem('preloaderShown'); } catch (e) {}
+  if (seen) {
     preloader.remove();
     document.body.style.overflow = '';
     gsap.set('.hero__img-card', { opacity: 1 });
     signalPreloaderDone();
     return;
   }
-  sessionStorage.setItem('preloaderShown', '1');
+  // Marqué « vu » seulement une fois l'animation terminée : si la page se
+  // recharge pendant le preloader (Live Server…), il se rejoue au lieu d'être sauté.
+  window.addEventListener('preloaderDone', () => {
+    try { sessionStorage.setItem('preloaderShown', '1'); } catch (e) {}
+  }, { once: true });
 
   const wordL  = preloader.querySelector('.pl__word--left');
   const wordR  = preloader.querySelector('.pl__word--right');
