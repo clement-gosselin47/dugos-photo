@@ -291,7 +291,7 @@ img:not([src]), img[src=""] { display: none; }
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--black);
-  max-width: 20ch;
+  max-width: 24ch;
   margin: 0 auto 28px;
 }
 
