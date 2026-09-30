@@ -394,7 +394,16 @@ body {
   .nav__links { gap: 20px; }
   .nav__link { font-size: 12px; }
   .contact { grid-template-columns: 1fr; }
+  /* iPhone : empêche la page de glisser sur les côtés. `clip` (et non
+     `hidden`) ne crée pas de conteneur de défilement sur body. */
+  body { overflow-x: clip; }
+  /* 16px minimum dans les champs : en dessous, Safari iOS zoome au toucher
+     et la page zoomée peut alors glisser latéralement */
+  .form__input { font-size: 16px; }
   .contact__left { position: static; height: 32vh; }
+  /* Bande basse : cadrage centré sur les deux fillettes et le mouvement de
+     la robe (la tête de la mariée passerait sous le logo de toute façon) */
+  .contact__img-placeholder { object-position: 50% 42%; }
   .contact__form { padding: 60px 32px 80px; }
   .form__row { grid-template-columns: 1fr; }
   .form__success { padding: 120px 32px 60px; }
