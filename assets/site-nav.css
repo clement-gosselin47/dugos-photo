@@ -35,6 +35,11 @@
 .nav--open .nav__toggle span:nth-child(2) { opacity: 0; }
 .nav--open .nav__toggle span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
+/* Éléments propres au menu mobile (injectés par site-nav.js) : masqués sur desktop */
+.nav__menu-bg { display: none; }
+.nav__label,
+.nav__label-inner { display: inline; }
+
 /* Scrollbar custom : inutile dès qu'on est sur un pointeur tactile */
 @media (hover: none) and (pointer: coarse) {
   .c-scrollbar { display: none !important; }
@@ -71,56 +76,143 @@
 
   .nav__toggle { display: block; }
 
-  /* --- Menu plein écran --- */
+  /* --- Menu plein écran « chambre noire » ---------------------------------
+     Empilement dans .nav : fond photo (1) < liens (2) < logo et ☰ (3). */
+
+  /* En-tête menu ouvert : plus de bandeau blanc, logo et ☰ en blanc */
+  .nav.nav--open {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+  .nav--open .nav__logo-img { filter: invert(1) !important; transition: filter 0.3s ease; }
+  .nav--open .nav__toggle span { background: #ffffff; }
+
+  /* Fond : noir + photo N&B révélée en fondu avec un lent zoom arrière, grain */
+  .nav__menu-bg {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: #0b0b0b;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.45s ease, visibility 0s linear 0.45s;
+  }
+  .nav--open .nav__menu-bg {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.45s ease;
+  }
+  .nav__menu-photo {
+    position: absolute;
+    inset: -4%;
+    background: center / cover no-repeat;
+    filter: grayscale(1) contrast(1.05);
+    opacity: 0;
+    transform: scale(1.18);
+  }
+  .nav__menu-photo.is-active {
+    opacity: 0.42;
+    transition: opacity 1.2s ease;
+    animation: navMenuZoom 10s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes navMenuZoom {
+    from { transform: scale(1.18); }
+    to   { transform: scale(1); }
+  }
+  /* Voile dégradé (lisibilité des liens et du pied) + grain argentique */
+  .nav__menu-bg::before,
+  .nav__menu-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .nav__menu-bg::before {
+    z-index: 1;
+    background:
+      linear-gradient(180deg, rgba(11,11,11,0.75) 0%, rgba(11,11,11,0.15) 30%,
+                      rgba(11,11,11,0.25) 62%, rgba(11,11,11,0.9) 100%);
+  }
+  .nav__menu-bg::after {
+    z-index: 2;
+    opacity: 0.09;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Liens : grands, alignés à gauche */
   .nav__links {
     position: fixed;
     inset: 0;
+    z-index: 2;
     height: 100vh;
     height: 100dvh;
     width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 0 32px;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    gap: 4px !important;
-    background: #ffffff;
+    gap: 6px !important;
+    background: transparent;
     list-style: none;
-    opacity: 0;
     visibility: hidden;
-    transition: opacity 0.32s ease, visibility 0s linear 0.32s;
+    pointer-events: none;
+    transition: visibility 0s linear 0.45s;
   }
   .nav--open .nav__links {
-    opacity: 1;
     visibility: visible;
-    transition: opacity 0.32s ease;
+    pointer-events: auto;
+    transition: none;
   }
 
   .nav__links li {
-    width: auto;
-    text-align: center;
+    width: 100%;
+    text-align: left;
     list-style: none;
-    opacity: 0;
-    transform: translateY(14px);
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .nav--open .nav__links li { opacity: 1; transform: none; }
-  .nav--open .nav__links li:nth-child(1) { transition-delay: 0.06s; }
-  .nav--open .nav__links li:nth-child(2) { transition-delay: 0.12s; }
-  .nav--open .nav__links li:nth-child(3) { transition-delay: 0.18s; }
-  .nav--open .nav__links li:nth-child(4) { transition-delay: 0.24s; }
 
   .nav__link {
-    display: block;
-    padding: 16px 28px !important;
+    display: flex !important;
+    align-items: baseline;
+    gap: 16px;
+    padding: 6px 0 !important;
     font-family: var(--font-serif, "DM Serif Display", Georgia, serif) !important;
-    font-size: 32px !important;
+    font-size: clamp(40px, 16vw, 72px) !important;
     font-weight: 400 !important;
-    letter-spacing: 0 !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.01em !important;
     text-transform: none !important;
-    color: #0a0a0a !important;
+    color: #ffffff !important;
+    -webkit-tap-highlight-color: transparent;
   }
   .nav__link::after { display: none !important; }   /* pas de soulignement hover */
+
+  /* Libellé révélé par le bas, derrière un masque */
+  .nav__label { display: inline-block; overflow: hidden; padding: 0 0.06em 0.18em 0; margin-bottom: -0.08em; }
+  .nav__label-inner {
+    display: inline-block;
+    transform: translateY(105%);
+    transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .nav--open .nav__label-inner { transform: none; }
+  .nav--open .nav__links li:nth-child(1) .nav__label-inner { transition-delay: 0.12s; }
+  .nav--open .nav__links li:nth-child(2) .nav__label-inner { transition-delay: 0.2s; }
+  .nav--open .nav__links li:nth-child(3) .nav__label-inner { transition-delay: 0.28s; }
+  .nav--open .nav__links li:nth-child(4) .nav__label-inner { transition-delay: 0.36s; }
+
+  /* Page courante : plus grande et pleinement blanche ; les autres en retrait */
+  .nav__link:not([aria-current="page"]) .nav__label-inner { opacity: 0.62; }
+  .nav__link[aria-current="page"] { font-size: clamp(50px, 20vw, 90px) !important; }
+  .nav__link:active .nav__label-inner { opacity: 0.6; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav__menu-photo.is-active { animation: none; transform: none; }
+    .nav__label-inner { transition: none; }
+  }
 
   /* L'en-tête escamotable ne doit pas emporter un menu ouvert */
   .nav.nav--open {
