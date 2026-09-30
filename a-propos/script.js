@@ -87,24 +87,59 @@ window.addEventListener('load', revealVisible);
 setTimeout(() => revealEls.forEach(el => el.classList.add('revealed')), 2000);
 
 // ---- Parallax images (throttlé en rAF : pas de layout-thrash pendant le scroll) ----
+// Desktop : la photo avant du collage et la photo seule se décalent (±100px).
+// Mobile : les photos de chapitre sont bord à bord, donc c'est l'image qui
+// glisse À L'INTÉRIEUR de son cadre fixe (image haute de 120 %, voir style.css) ;
+// seule la petite photo du collage d'en-tête bouge, avec une amplitude réduite.
 (function () {
-  const targets = ['.block__img--front', '.block__img-single']
+  const mqMobile = window.matchMedia('(max-width: 768px)');
+  const byBlock = el => ({ el, section: el.closest('.block') });
+  const desktopTargets = ['.block__img--front', '.block__img-single']
     .map(s => document.querySelector(s))
     .filter(Boolean)
-    .map(el => ({ el, section: el.closest('.block') }))
+    .map(byBlock)
     .filter(t => t.section);
-  if (!targets.length) return;
+  const front = document.querySelector('.block__img--front');
+  const frames = [...document.querySelectorAll('.block__video, .block__img-single')]
+    .map(frame => ({ frame, img: frame.querySelector('img') }))
+    .filter(f => f.img);
+  if (!desktopTargets.length && !frames.length) return;
 
   let ticking = false;
+  let wasMobile = null;
   function apply() {
     ticking = false;
     const vh = window.innerHeight;
-    targets.forEach(({ el, section }) => {
-      const rect = section.getBoundingClientRect();
-      const progress = (vh - rect.top) / (vh + rect.height);
-      el.style.transform = `translateY(${(progress - 0.5) * -200}px)`;
+    const mobile = mqMobile.matches;
+    if (mobile !== wasMobile) {   // changement de format : on repart de zéro
+      desktopTargets.forEach(({ el }) => { el.style.transform = ''; });
+      frames.forEach(({ img }) => { img.style.transform = ''; });
+      wasMobile = mobile;
+    }
+
+    if (!mobile) {
+      desktopTargets.forEach(({ el, section }) => {
+        const rect = section.getBoundingClientRect();
+        const progress = (vh - rect.top) / (vh + rect.height);
+        el.style.transform = `translateY(${(progress - 0.5) * -200}px)`;
+      });
+      return;
+    }
+
+    frames.forEach(({ frame, img }) => {
+      const rect = frame.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > vh) return;
+      const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh + rect.height)));
+      // 0 → l'image est calée en haut ; 1 → décalée de toute sa marge (20 % du cadre)
+      img.style.transform = `translate3d(0, ${-progress * 0.2 * rect.height}px, 0)`;
     });
+    if (front) {
+      const rect = front.closest('.block').getBoundingClientRect();
+      const progress = (vh - rect.top) / (vh + rect.height);
+      front.style.transform = `translateY(${(progress - 0.5) * -70}px)`;
+    }
   }
+  window.addEventListener('resize', () => { if (!ticking) { ticking = true; requestAnimationFrame(apply); } });
   window.addEventListener('scroll', () => {
     if (!ticking) { ticking = true; requestAnimationFrame(apply); }
   }, { passive: true });
