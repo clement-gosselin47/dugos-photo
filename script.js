@@ -221,78 +221,103 @@ window.addEventListener('scroll', () => {
 // naturelle et définitive quand on mesure/active le pin.
 function initHeroPin() {
   if (!hasGsap) return;
-  // Sur mobile, pas de pin : l'image épinglée chevaucherait les textes
-  if (window.matchMedia('(max-width: 768px)').matches) return;
   const pin = document.getElementById('heroImgPin');
   if (!pin) return;
 
-  // Pin le conteneur pendant le scroll
-  ScrollTrigger.create({
-    trigger: pin,
+  // Deux réglages du même effet (gsap.matchMedia remet tout à zéro si l'on
+  // change de format, ex. rotation du téléphone) :
+  //  - ordinateur : carte épinglée à 180px du haut, elle se pose au centre de
+  //    .featured, entre les deux textes ;
+  //  - mobile : carte épinglée au centre de l'écran, elle se pose dans
+  //    .featured__img-gap, affiché en tête de .featured (au-dessus des textes).
+  const mm = gsap.matchMedia();
+  mm.add('(min-width: 769px)', () => setupHeroFlip({
     start: 'top 180px',
     endTrigger: '.featured',
     end: 'bottom bottom',
-    pin: true,
-    pinSpacing: false,
-    invalidateOnRefresh: true,
-  });
+    revealPx: 300,
+  }));
+  mm.add('(max-width: 768px)', () => setupHeroFlip({
+    start: 'center center',
+    endTrigger: '.featured__img-gap',
+    end: 'center center',
+    revealPx: 160,       // parcours plus court sur mobile : fondu plus ramassé
+  }));
 
-  // Flip 3D synchronisé avec le scroll (même plage) + fondu de l'image PENDANT
-  // la bascule : l'opacité de `.hero__img-wrap` (le parent, jamais `.hero__img-card`
-  // dont une opacité < 1 aplatirait le `preserve-3d` et casserait le flip) plonge
-  // vers un plancher discret (MIN_OPACITY) autour du milieu du parcours, là où les
-  // deux faces s'échangent : on devine le mécanisme sans gêner la lecture du texte
-  // de l'intro qu'elle traverse à ce moment.
-  const wrap  = document.querySelector('.hero__img-wrap');
-  const front = document.querySelector('.hero__img-card__front');
-  const back  = document.querySelector('.hero__img-card__back');
-  const introTexts = document.querySelectorAll('.intro__text');
-  const introLast  = introTexts[introTexts.length - 1];
-  const REVEAL_EARLY = 60;  // le fondu démarre quand le bas du texte est encore 60px sous le haut de la carte
-  const REVEAL_PX    = 300; // durée du fondu d'apparition (px de scroll) : lent et doux
-  const MIN_OPACITY  = 0.15; // jamais totalement invisible : on devine la rotation derrière le texte
-  const card = document.querySelector('.hero__img-card');
-  gsap.to('.hero__img-card', {
-    rotateY: -180,
-    ease: 'none',
-    // Échange des faces calé sur la rotation RÉELLE (scrub = léger retard sur le
-    // scroll) : il se fait pile quand la carte est de profil (-90°), donc invisible
-    // même si l'image reste légèrement visible pendant la bascule.
-    onUpdate: () => {
-      if (!front || !back) return;
-      const showFront = gsap.getProperty(card, 'rotateY') > -90;
-      front.style.opacity = showFront ? '1' : '0';
-      back.style.opacity  = showFront ? '0' : '1';
-    },
-    scrollTrigger: {
+  function setupHeroFlip({ start, endTrigger, end, revealPx }) {
+    // Pin le conteneur pendant le scroll
+    ScrollTrigger.create({
       trigger: pin,
-      start: 'top 180px',
-      endTrigger: '.featured',
-      end: 'bottom bottom',
-      scrub: 0.4,                       // suit le scroll de près : la bascule
-      onUpdate: self => {              //  tombe PILE à progress 0,5 (rotateY -90°)
-        const p = self.progress;
-        // Opacité = fonction CONTINUE et lisse de la progression (aucun palier,
-        // aucun saut) : 1 aux extrémités, ~0 au milieu où se fait la bascule.
-        // cos donne la vallée, smoothstep adoucit l'entrée/sortie.
-        const c = Math.abs(Math.cos(p * Math.PI));   // 1 aux bords, 0 au centre
-        const t = Math.min(1, c / 0.72);
-        let o = t * t * (3 - 2 * t);
-        // Après la bascule, la face arrière ne réapparaît qu'une fois le texte
-        // de l'intro passé au-dessus de la carte (sinon elle le recouvre).
-        if (p >= 0.5 && introLast) {
-          const gap = pin.getBoundingClientRect().top - introLast.getBoundingClientRect().bottom;
-          const g = Math.max(0, Math.min(1, (gap + REVEAL_EARLY) / REVEAL_PX));
-          o *= g * g * g * (g * (g * 6 - 15) + 10);   // smootherstep : entrée/sortie très douces
-        }
-        // Plancher : l'image reste légèrement visible pendant la traversée du texte
-        o = MIN_OPACITY + (1 - MIN_OPACITY) * o;
-        if (wrap) wrap.style.opacity = String(o);
+      start, endTrigger, end,
+      pin: true,
+      pinSpacing: false,
+      invalidateOnRefresh: true,
+    });
+
+    // Flip 3D synchronisé avec le scroll (même plage) + fondu de l'image PENDANT
+    // la bascule : l'opacité de `.hero__img-wrap` (le parent, jamais `.hero__img-card`
+    // dont une opacité < 1 aplatirait le `preserve-3d` et casserait le flip) plonge
+    // vers un plancher discret (MIN_OPACITY) autour du milieu du parcours, là où les
+    // deux faces s'échangent : on devine le mécanisme sans gêner la lecture du texte
+    // de l'intro qu'elle traverse à ce moment.
+    const wrap  = document.querySelector('.hero__img-wrap');
+    const front = document.querySelector('.hero__img-card__front');
+    const back  = document.querySelector('.hero__img-card__back');
+    const introTexts = document.querySelectorAll('.intro__text');
+    const introLast  = introTexts[introTexts.length - 1];
+    const REVEAL_EARLY = 60;  // le fondu démarre quand le bas du texte est encore 60px sous le haut de la carte
+    const MIN_OPACITY  = 0.15; // jamais totalement invisible : on devine la rotation derrière le texte
+    const card = document.querySelector('.hero__img-card');
+    const smoother = g => g * g * g * (g * (g * 6 - 15) + 10);   // smootherstep
+    gsap.to(card, {
+      rotateY: -180,
+      ease: 'none',
+      // Échange des faces calé sur la rotation RÉELLE (scrub = léger retard sur le
+      // scroll) : il se fait pile quand la carte est de profil (-90°), donc invisible
+      // même si l'image reste légèrement visible pendant la bascule.
+      onUpdate: () => {
+        if (!front || !back) return;
+        const showFront = gsap.getProperty(card, 'rotateY') > -90;
+        front.style.opacity = showFront ? '1' : '0';
+        back.style.opacity  = showFront ? '0' : '1';
       },
-      onLeave:     () => wrap && (wrap.style.opacity = '1'),
-      onLeaveBack: () => wrap && (wrap.style.opacity = '1'),
-    }
-  });
+      scrollTrigger: {
+        trigger: pin,
+        start, endTrigger, end,
+        scrub: 0.4,
+        onUpdate: self => {
+          const p = self.progress;
+          // Opacité = fonction CONTINUE et lisse de la progression (aucun palier,
+          // aucun saut) : 1 aux extrémités, ~0 au milieu où se fait la bascule.
+          const c = Math.abs(Math.cos(p * Math.PI));   // 1 aux bords, 0 au centre
+          const t = Math.min(1, c / 0.72);
+          let o = t * t * (3 - 2 * t);
+          // Après la bascule, la face arrière ne réapparaît qu'une fois le texte
+          // de l'intro passé au-dessus de la carte (sinon elle le recouvre).
+          // Sur les 12 derniers % du parcours elle finit quoi qu'il arrive son
+          // fondu : aucun saut d'opacité quand la carte se pose.
+          if (p >= 0.5 && introLast) {
+            const gap = pin.getBoundingClientRect().top - introLast.getBoundingClientRect().bottom;
+            const g = Math.max(0, Math.min(1, (gap + REVEAL_EARLY) / revealPx));
+            const land = Math.max(0, Math.min(1, (p - 0.88) / 0.12));
+            o *= smoother(Math.max(g, land));
+          }
+          // Plancher : l'image reste légèrement visible pendant la traversée du texte
+          o = MIN_OPACITY + (1 - MIN_OPACITY) * o;
+          if (wrap) wrap.style.opacity = String(o);
+        },
+        onLeave:     () => wrap && (wrap.style.opacity = '1'),
+        onLeaveBack: () => wrap && (wrap.style.opacity = '1'),
+      }
+    });
+
+    // Au changement de format : on nettoie les styles posés à la main
+    return () => {
+      if (wrap) wrap.style.opacity = '';
+      if (front) front.style.opacity = '';
+      if (back) back.style.opacity = '';
+    };
+  }
 
   // Bug 1er chargement : tant que les polices ne sont pas encore appliquées,
   // le titre et les textes s'affichent avec une police de secours (taille/hauteur
@@ -324,28 +349,54 @@ if (hasGsap) gsap.utils.toArray('.intro__text').forEach(el => {
   });
 });
 
-// ---- Slide-in textes featured (scrub) ----
-if (hasGsap) gsap.from('.featured__left .featured__caption', {
-  x: -120,
-  ease: 'none',
-  scrollTrigger: {
-    trigger: '.featured',
-    start: 'top 80%',
-    end: 'center center',
-    scrub: 1.2,
-  }
-});
+// ---- Textes featured (scrub) ----
+if (hasGsap) {
+  const mmFeat = gsap.matchMedia();
 
-if (hasGsap) gsap.from('.featured__right .featured__caption', {
-  x: 120,
-  ease: 'none',
-  scrollTrigger: {
-    trigger: '.featured',
-    start: 'top 80%',
-    end: 'center center',
-    scrub: 1.2,
-  }
-});
+  // Ordinateur : les légendes glissent depuis les côtés vers l'image centrale
+  mmFeat.add('(min-width: 769px)', () => {
+    gsap.from('.featured__left .featured__caption', {
+      x: -120,
+      ease: 'none',
+      scrollTrigger: { trigger: '.featured', start: 'top 80%', end: 'center center', scrub: 1.2 },
+    });
+    gsap.from('.featured__right .featured__caption', {
+      x: 120,
+      ease: 'none',
+      scrollTrigger: { trigger: '.featured', start: 'top 80%', end: 'center center', scrub: 1.2 },
+    });
+  });
+
+  // Mobile : une seule colonne, donc parallaxe VERTICAL (un glissement latéral
+  // sortirait de l'écran). Vrai parallaxe continu : tant qu'il est à l'écran,
+  // chaque texte glisse de +dy (entrée par le bas) à -dy (sortie par le haut),
+  // donc défile à une vitesse légèrement différente de la page, d'autant plus
+  // que dy est grand (les textes du bas « rattrapent » ceux du haut). Décalages
+  // modérés : quand la carte du hero se pose au-dessus, les textes sont déjà
+  // quasiment en place. Le fondu d'apparition est court (12 % d'écran) pour
+  // qu'ils soient bien affichés à ce moment-là.
+  mmFeat.add('(max-width: 768px)', () => {
+    const layers = [
+      ['.featured__title', 20],
+      ['.featured__left .featured__caption', 40],
+      ['.featured__right .featured__caption', 60],
+    ];
+    layers.forEach(([sel, dy]) => {
+      const el = document.querySelector(sel);
+      if (!el) return;
+      gsap.fromTo(el, { y: dy }, {
+        y: -dy,
+        ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 0.5 },
+      });
+      gsap.fromTo(el, { opacity: 0 }, {
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'top 88%', scrub: 0.5 },
+      });
+    });
+  });
+}
 
 // ---- Avis Google (carrousel) ----
 // Les données viennent de reviews.json, régénéré par fetch-reviews.js
