@@ -321,7 +321,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .nav__links { gap: 20px; }
   .nav__link { font-size: 12px; }
 
-  /* Mobile : les 2 catégories restent côte à côte */
+  /* Mobile : les 2 catégories empilées, en grand (une par écran ou presque) */
   /* Le fond blanc remplit tout l'écran : le footer fixe reste caché
      derrière et ne se découvre qu'en défilant vers le bas. */
   .page-content {
@@ -331,28 +331,27 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     overflow: visible;
   }
   .categories {
-    flex-direction: row;
-    min-height: 100vh;
-    min-height: 100dvh;
+    flex-direction: column;
     height: auto;
-    align-items: center;          /* les 2 catégories centrées verticalement */
-    justify-content: center;
-    padding: 80px 12px 56px;      /* garde de l'air sous la nav */
-    gap: 10px;
+    min-height: 0;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 96px 20px 72px;      /* dégage la nav fixe */
+    gap: 56px;
   }
   .cat {
-    flex: 1 1 0;
-    min-width: 0;
+    flex: none;
+    width: 100%;
     padding: 0;
     --cat-w: 100%;
   }
   .cat:not(:last-child) { padding-bottom: 0; }
-  .cat__img { width: 100%; height: auto; }
-  .cat__title { margin-top: 8px; }
-  .cat__name { font-size: 16px; }
-  /* Sur mobile : on garde le nom + la flèche, on masque « Voir la galerie » */
-  .cat__cta { font-size: 0; letter-spacing: 0; gap: 0; }
-  .cat__arrow { font-size: 15px; }
+  .cat__img { width: 100%; height: auto; aspect-ratio: 4 / 5; overflow: hidden; }
+  .cat:first-child .cat__img img { object-position: 50% 30%; }
+  .cat:hover .cat__img { transform: none; }     /* pas de zoom au toucher */
+  .cat__title { margin-top: 14px; align-items: center; }
+  .cat__name { font-size: clamp(32px, 9vw, 40px); }
+  /* « Voir la galerie → » affiché en entier, même style que sur desktop */
 
   .footer__main { padding-top: 24px; }
   .footer__bottom { flex-direction: column; align-items: center; text-align: center; gap: 20px; padding: 24px 24px 0; }
