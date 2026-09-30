@@ -324,9 +324,9 @@ window.addEventListener('resize', () => {
   }, 150);
 });
 
-// ---- Header + bouton Flow/Grid : masqués pendant le scroll, reviennent à l'arrêt ----
+// ---- Header + boutons Retour et Flow/Grid : masqués pendant le scroll, reviennent à l'arrêt ----
 (function () {
-  const els = [document.querySelector(".nav"), document.querySelector(".view-toggle")].filter(Boolean);
+  const els = [document.querySelector(".nav"), document.querySelector(".view-toggle"), document.querySelector(".gallery-back")].filter(Boolean);
   if (!els.length) return;
   let idleTimer = null;
   const show = () => els.forEach(el => el.classList.remove("nav--hidden"));
