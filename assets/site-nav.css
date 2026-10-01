@@ -66,10 +66,10 @@
     align-items: center !important;
     justify-content: space-between !important;
     gap: 0 !important;
-    background: rgba(255, 255, 255, 0.96) !important;
-    -webkit-backdrop-filter: blur(8px) saturate(1.15);
-    backdrop-filter: blur(8px) saturate(1.15);
-    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08) !important;
+    background: #ffffff !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none !important;
   }
   .nav__logo { position: relative; z-index: 3; }
   .nav__logo-img { filter: none !important; }   /* logo foncé sur fond clair */
