@@ -42,6 +42,7 @@
   var running  = false;
   var paused   = false;
   var lastFrameAt = 0;
+  var lastSetY = targetY;   // dernière position posée par la boucle
   var watchdog = null;
 
   function maxScroll() {
@@ -52,26 +53,43 @@
     var m = maxScroll();
     return v < 0 ? 0 : (v > m ? m : v);
   }
+  // Page verrouillée (preloader, menu mobile…) : overflow:hidden n'empêche
+  // pas window.scrollTo, donc on ne fait pas défiler la page en dessous.
+  function locked() {
+    return docEl.style.overflow === 'hidden' || (document.body && document.body.style.overflow === 'hidden');
+  }
 
   function frame(now) {
     lastFrameAt = now || performance.now();
+    // Quelqu'un d'autre a fait défiler la page pendant l'animation (ancre,
+    // focus clavier, scrollIntoView, recherche…) : on lui laisse la main au
+    // lieu de ramener la page à notre position.
+    if (Math.abs(window.scrollY - lastSetY) > 2) {
+      currentY = targetY = lastSetY = window.scrollY;
+      running = false;
+      clearTimeout(watchdog);
+      return;
+    }
     var diff = targetY - currentY;
 
     if (Math.abs(diff) <= SETTLE_PX) {
       currentY = targetY;
       window.scrollTo(0, currentY);
+      lastSetY = window.scrollY;
       running = false;
       clearTimeout(watchdog);
       return;
     }
     currentY += diff * EASE;
     window.scrollTo(0, Math.round(currentY * 100) / 100);
+    lastSetY = window.scrollY;
     requestAnimationFrame(frame);
   }
 
   function ensureRunning() {
     if (!running) {
       running = true;
+      lastSetY = window.scrollY;
       lastFrameAt = performance.now();
       requestAnimationFrame(frame);
     }
@@ -97,6 +115,8 @@
   // ---- Détourne la molette -----------------------------------------------
   function onWheel(e) {
     if (paused || e.ctrlKey || e.defaultPrevented) return;
+    if (locked()) return;                              // le natif bloque déjà (overflow:hidden)
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; // geste horizontal : natif
     if (scrollableAncestor(e.target, e.deltaY)) return; // conteneur interne scrollable
 
     var d = e.deltaY;
@@ -115,7 +135,7 @@
 
   // ---- Clavier (même cible → même douceur) -------------------------------
   function onKey(e) {
-    if (paused || e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (paused || locked() || e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
     var t = e.target, tag = (t && t.tagName || '').toLowerCase();
     if (t && (t.isContentEditable || tag === 'input' || tag === 'textarea' || tag === 'select')) return;
 

@@ -73,6 +73,9 @@
   nav.appendChild(btn);
 
   function setOpen(open) {
+    // Déjà dans cet état : ne pas toucher à overflow (Échap pendant le
+    // preloader ou la lightbox débloquerait sinon le défilement de la page)
+    if (open === nav.classList.contains('nav--open')) return;
     nav.classList.toggle('nav--open', open);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     btn.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');

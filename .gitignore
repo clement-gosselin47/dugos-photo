@@ -32,3 +32,6 @@ _unused-source/
 # Documents de travail (gardés en local, pas dans le dépôt)
 Questionnaire_A_Propos_Dugos.docx
 *.docx
+
+# Workflow Atelier (agents)
+.atelier/

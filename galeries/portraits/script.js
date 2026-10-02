@@ -118,6 +118,7 @@ function openLightbox(index) {
   lbCounter.textContent = `${lbIndex + 1} / ${originals.length}`;
   lightbox.classList.add('open');
   lightbox.setAttribute('aria-hidden', 'false');
+  document.documentElement.style.overflow = 'hidden'; // html a overflow-x:hidden : body seul ne suffit pas
   document.body.style.overflow = 'hidden';
   window.smoothScroll?.pause();
 }
@@ -126,6 +127,7 @@ function closeLightbox() {
   lightbox.classList.remove('open');
   lightbox.setAttribute('aria-hidden', 'true');
   lbImg.src = '';
+  document.documentElement.style.overflow = '';
   document.body.style.overflow = '';
   if (!isFlow) window.smoothScroll?.resume();
 }
@@ -295,10 +297,14 @@ grid.addEventListener('scroll', () => {
 // (assets/smooth-scroll.js) — on ne touche à rien, le footer se dévoile
 // progressivement comme sur le reste du site.
 // En mode Flow : la molette verticale pilote le défilement horizontal.
-const normalizeDelta = e =>
-  e.deltaMode === 1 ? e.deltaY * 33 :
-  e.deltaMode === 2 ? e.deltaY * window.innerHeight :
-  e.deltaY;
+// Geste horizontal du trackpad (deltaX) pris en compte aussi : sinon il est
+// bloqué par preventDefault et la galerie ne bouge pas.
+const normalizeDelta = e => {
+  const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+  return e.deltaMode === 1 ? d * 33 :
+         e.deltaMode === 2 ? d * window.innerHeight :
+         d;
+};
 
 document.addEventListener('wheel', e => {
   if (e.ctrlKey) return; // laisse le zoom (pinch/ctrl+molette) fonctionner

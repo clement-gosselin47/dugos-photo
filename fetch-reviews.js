@@ -151,6 +151,19 @@ function loadExistingItems() {
     items: merged,
   };
 
+  // Rien n'a changé à part la date : on ne réécrit pas le fichier, sinon le
+  // workflow quotidien commiterait (et redéploierait le site) tous les jours.
+  try {
+    const { updatedAt: _a, ...prev } = JSON.parse(readFileSync(OUT, 'utf8'));
+    const { updatedAt: _b, ...next } = payload;
+    if (JSON.stringify(prev) === JSON.stringify(next)) {
+      console.log(`= Avis inchangés (${merged.length} avis · note ${payload.rating} · ${payload.count} avis Google), reviews.json non modifié.`);
+      return;
+    }
+  } catch {
+    /* fichier absent ou illisible : on l'écrit */
+  }
+
   writeFileSync(OUT, JSON.stringify(payload, null, 2) + '\n', 'utf8');
   console.log(`✓ ${merged.length} avis dans reviews.json  (note ${payload.rating} · ${payload.count} avis Google)`);
   if (placeId) console.log(`  Place ID : ${placeId}`);

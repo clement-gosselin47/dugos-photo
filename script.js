@@ -11,6 +11,13 @@
 // ---- GSAP disponible ? (si le CDN échoue, le site reste utilisable) ----
 const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
 
+// Verrouille le défilement : html porte overflow-x:hidden, donc overflow:hidden
+// sur body seul ne bloque pas la fenêtre (il faut verrouiller les deux).
+function lockScroll(on) {
+  document.documentElement.style.overflow = on ? 'hidden' : '';
+  document.body.style.overflow = on ? 'hidden' : '';
+}
+
 // ---- Preloader ----
 // Le pin/flip du hero (plus bas) ne doit s'initialiser qu'une fois le preloader
 // entièrement terminé : sinon ScrollTrigger peut réagencer .hero__img-card
@@ -28,7 +35,7 @@ function signalPreloaderDone() {
   // GSAP absent → aucune animation possible, on retire le preloader immédiatement
   if (!hasGsap) {
     preloader.remove();
-    document.body.style.overflow = '';
+    lockScroll(false);
     signalPreloaderDone();
     return;
   }
@@ -38,7 +45,7 @@ function signalPreloaderDone() {
   try { seen = !!sessionStorage.getItem('preloaderShown'); } catch (e) {}
   if (seen) {
     preloader.remove();
-    document.body.style.overflow = '';
+    lockScroll(false);
     gsap.set('.hero__img-card', { opacity: 1 });
     signalPreloaderDone();
     return;
@@ -54,7 +61,7 @@ function signalPreloaderDone() {
   const imgBox = preloader.querySelector('.pl__images');
   const imgs   = preloader.querySelectorAll('.pl__img');
 
-  document.body.style.overflow = 'hidden';
+  lockScroll(true);
   gsap.set([wordL, wordR, imgs], { opacity: 0 });
   gsap.set('.hero__img-card', { opacity: 0 });
 
@@ -89,7 +96,7 @@ function signalPreloaderDone() {
       gsap.to(preloader, { opacity: 0, duration: 0.4,
         onComplete: () => {
           preloader.remove();
-          document.body.style.overflow = '';
+          lockScroll(false);
           gsap.to('.hero__img-card', { opacity: 1, duration: 0.3 });
           signalPreloaderDone();
         }
@@ -135,7 +142,7 @@ function signalPreloaderDone() {
           gsap.set('.hero__img-card', { opacity: 1 });
           gsap.set(preloader, { opacity: 0 });
           preloader.remove();
-          document.body.style.overflow = '';
+          lockScroll(false);
           signalPreloaderDone();
         }
       });
