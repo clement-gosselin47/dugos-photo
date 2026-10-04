@@ -112,3 +112,59 @@
   if (mq.addEventListener) mq.addEventListener('change', onMq);
   else if (mq.addListener) mq.addListener(onMq);
 })();
+
+/* ============================================================================
+   Changement de langue : on reste au même endroit de la page
+   ----------------------------------------------------------------------------
+   FR et EN sont deux pages distinctes. Au clic sur le globe on mémorise la
+   position de lecture (en proportion de la hauteur de la page) ; la page de
+   l'autre langue la restaure au chargement. Les textes n'ayant pas exactement
+   la même longueur, la proportion est la façon la plus fiable de retomber
+   sur le même passage.
+   ========================================================================== */
+(function () {
+  'use strict';
+  var KEY = 'langScroll';
+  var maxScroll = function () {
+    return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+  };
+
+  // --- Départ : mémoriser la position ---
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('.nav__lang-link') : null;
+    if (!a || !a.href) return;
+    try {
+      var max = maxScroll();
+      sessionStorage.setItem(KEY, JSON.stringify({
+        ratio: max > 0 ? window.scrollY / max : 0,
+        t: Date.now()
+      }));
+    } catch (err) { /* stockage indisponible : on arrive simplement en haut */ }
+  });
+
+  // --- Arrivée : restaurer ---
+  var saved = null;
+  try {
+    saved = JSON.parse(sessionStorage.getItem(KEY) || 'null');
+    sessionStorage.removeItem(KEY);
+  } catch (err) { saved = null; }
+  if (!saved || typeof saved.ratio !== 'number' || Date.now() - saved.t > 15000) return;
+
+  function restore() {
+    var to = saved.ratio * maxScroll();
+    if (window.smoothScroll && window.smoothScroll.setImmediate) window.smoothScroll.setImmediate(to);
+    else window.scrollTo(0, to);
+  }
+  // Le navigateur peut rétablir sa propre position : on la neutralise
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+  function run() {
+    restore();
+    // La hauteur de la page peut encore changer (animation d'intro, images) :
+    // on réajuste une fois que tout est en place.
+    setTimeout(restore, 400);
+    setTimeout(restore, 1200);
+  }
+  if (document.readyState === 'complete') run();
+  else window.addEventListener('load', run);
+})();
