@@ -333,7 +333,7 @@ body {
 }
 
 /* Tablette : les deux photos du haut se touchent à peine, aucune ne cache l'autre */
-@media (min-width: 769px) and (max-width: 1100px) {
+@media (min-width: 769px) and (max-width: 1400px) {
   .block__text { padding: 0 40px; }
   .block__imgs { width: 54%; height: 500px; margin-right: 40px; }
   .block__img--back { width: 62%; height: 440px; top: 0; bottom: auto; left: 0; right: auto; }
