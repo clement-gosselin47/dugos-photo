@@ -90,6 +90,34 @@ async function getPlace() {
   return place;
 }
 
+// L'API « nouvelle » ne renvoie que les 5 avis jugés les plus pertinents, pas les
+// plus récents. L'ancienne API Places sait trier par date (reviews_sort=newest) :
+// on l'interroge en plus pour ne rater aucun avis récent. Si elle n'est pas activée
+// sur la clé Google, on l'ignore et on garde seulement les avis de la nouvelle API.
+async function getNewestReviews(placeId) {
+  if (!placeId) return [];
+  try {
+    const url = 'https://maps.googleapis.com/maps/api/place/details/json'
+      + `?place_id=${encodeURIComponent(placeId)}&fields=reviews&reviews_sort=newest&language=fr&key=${API_KEY}`;
+    const data = await (await fetch(url)).json();
+    if (data.status !== 'OK') {
+      console.warn(`Avis les plus récents indisponibles (${data.status}) : API « Places » classique non activée sur la clé ?`);
+      return [];
+    }
+    return (data.result?.reviews || []).map(r => ({
+      author: (r.author_name || 'Client').replace(/\s*\([^)]*\)\s*$/, '').trim(),
+      photo: r.profile_photo_url || '',
+      rating: r.rating || 5,
+      text: (r.text || '').replace(/\s+/g, ' ').trim(),
+      when: r.relative_time_description || '',
+      publishTime: r.time ? new Date(r.time * 1000).toISOString() : '',
+    }));
+  } catch (e) {
+    console.warn('Avis les plus récents indisponibles :', e.message);
+    return [];
+  }
+}
+
 // Clé de dédoublonnage d'un avis : le texte seul. Google renvoie parfois le même
 // avis sous deux noms d'auteur (ex. « Stéphanie ZAGO » / « Stephanie Barbe »).
 const keyOf = r => (r.text || '').replace(/\s+/g, ' ').slice(0, 80).toLowerCase();
@@ -121,7 +149,10 @@ function loadExistingItems() {
   const place = await getPlace();
   const placeId = place.id || PLACE_ID;
 
-  const fresh = (place.reviews || [])
+  const newest = await getNewestReviews(placeId);
+  const fresh = [
+    ...newest,
+    ...(place.reviews || [])
     .map(r => ({
       // "Prénom Nom (pseudo123)" → "Prénom Nom"
       author: (r.authorAttribution?.displayName || 'Client').replace(/\s*\([^)]*\)\s*$/, '').trim(),
@@ -130,8 +161,8 @@ function loadExistingItems() {
       text: (r.originalText?.text || r.text?.text || '').replace(/\s+/g, ' ').trim(),
       when: r.relativePublishTimeDescription || '',
       publishTime: r.publishTime || '',
-    }))
-    .filter(r => r.text.length >= MIN_LENGTH && r.rating >= MIN_RATING);
+    })),
+  ].filter(r => r.text.length >= MIN_LENGTH && r.rating >= MIN_RATING);
 
   const existing = loadExistingItems();
   const seen = new Set(existing.map(keyOf));
