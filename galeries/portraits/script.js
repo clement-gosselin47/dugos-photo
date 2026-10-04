@@ -343,17 +343,26 @@ window.addEventListener('resize', () => {
   let idleTimer = null;
   const show = () => els.forEach(el => el.classList.remove("nav--hidden"));
   const hide = () => els.forEach(el => el.classList.add("nav--hidden"));
+  // Les éléments se masquent seulement en descendant ; en remontant ils restent visibles
+  let lastY = window.scrollY;
   const onMove = () => {
     syncTop();
+    const y = window.scrollY, dy = y - lastY;
+    lastY = y;
     // En mode Flow, header et bouton restent toujours visibles ;
     // idem tout en haut de page en mode Grid
-    if (document.body.classList.contains("flow-mode") || window.scrollY < 20) {
+    if (document.body.classList.contains("flow-mode") || y < 20) {
       show();
       return;
     }
-    hide();
-    clearTimeout(idleTimer);
-    idleTimer = setTimeout(show, 450);
+    if (dy > 0) {
+      hide();
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(show, 450);
+    } else if (dy < 0) {
+      clearTimeout(idleTimer);
+      show();
+    }
   };
   // capture:true attrape aussi le scroll horizontal de la galerie en mode Flow
   document.addEventListener("scroll", onMove, { capture: true, passive: true });

@@ -562,15 +562,24 @@ document.querySelector('.testimonial__arrow--next')?.addEventListener('click', (
   const nav = document.querySelector(".nav");
   if (!nav) return;
   let idleTimer = null;
+  // Le header se masque seulement en descendant ; en remontant il reste visible
+  let lastY = window.scrollY;
   const onMove = () => {
+    const y = window.scrollY, dy = y - lastY;
+    lastY = y;
     // Tout en haut de page, le header reste toujours visible
-    if (window.scrollY < 20 && !document.body.classList.contains("flow-mode")) {
+    if (y < 20 && !document.body.classList.contains("flow-mode")) {
       nav.classList.remove("nav--hidden");
       return;
     }
-    nav.classList.add("nav--hidden");
-    clearTimeout(idleTimer);
-    idleTimer = setTimeout(() => nav.classList.remove("nav--hidden"), 450);
+    if (dy > 0) {
+      nav.classList.add("nav--hidden");
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => nav.classList.remove("nav--hidden"), 450);
+    } else if (dy < 0) {
+      clearTimeout(idleTimer);
+      nav.classList.remove("nav--hidden");
+    }
   };
   // capture:true attrape aussi le scroll horizontal de la galerie en mode Flow
   document.addEventListener("scroll", onMove, { capture: true, passive: true });
