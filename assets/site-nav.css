@@ -329,3 +329,13 @@ a.nav__lang-link:hover { opacity: 1; }
     color: #ffffff;
   }
 }
+
+/* Sélecteur de langue : globe + code de l'autre langue (remplace l'ancien « FR / EN ») */
+.nav__lang-link { display: inline-flex; align-items: center; gap: 7px; opacity: 1; }
+.nav__lang-icon { flex: none; transition: transform 0.4s ease; }
+a.nav__lang-link:hover .nav__lang-icon { transform: rotate(20deg); }
+.nav__lang-sep { display: none; }
+@media (max-width: 768px) {
+  .nav__links li.nav__lang { font-size: 16px; }
+  .nav__lang-icon { width: 20px; height: 20px; }
+}

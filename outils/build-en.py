@@ -79,21 +79,26 @@ def hreflang_block(fr, en):
     )
 
 
+GLOBE_SVG = ('<svg class="nav__lang-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" '
+             'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" '
+             'aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/>'
+             '<path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>')
+
+
 def lang_switcher(current, here, fr, en):
-    """<li> du sélecteur ; `here` = fichier qui le contient."""
-    def item(code, label, aria, target):
-        if code == current:
-            return (f'<span class="nav__lang-link" lang="{code}" aria-current="true" '
-                    f'aria-label="{aria}">{label}</span>')
-        return (f'<a class="nav__lang-link" href="{rel(here, target)}" lang="{code}" '
-                f'hreflang="{code}" aria-label="{aria}">{label}</a>')
+    """<li> du sélecteur : globe + code de l'AUTRE langue ; `here` = fichier qui le contient."""
+    if current == 'fr':
+        code, label, target = 'en', 'EN', en
+        aria = 'English version'
+    else:
+        code, label, target = 'fr', 'FR', fr
+        aria = 'Version française'
     return (
         '      <!--lang-->\n'
         '      <li class="nav__lang">'
-        + item('fr', 'FR', 'Français', fr)
-        + '<span class="nav__lang-sep" aria-hidden="true">/</span>'
-        + item('en', 'EN', 'English', en)
-        + '</li>\n'
+        f'<a class="nav__lang-link" href="{rel(here, target)}" lang="{code}" hreflang="{code}" '
+        f'aria-label="{aria}">{GLOBE_SVG}<span>{label}</span></a>'
+        '</li>\n'
         '      <!--/lang-->\n'
     )
 
@@ -651,28 +656,38 @@ def apply_regex(html, pairs, page):
 
 
 ATTR_RE = re.compile(r'(\b(?:href|src))="([^"]*)"')
+SRCSET_RE = re.compile(r'(\bsrcset)="([^"]*)"')
 
 
 def rewrite_urls(html, fr, en):
     fr_dir = posixpath.dirname(fr)
-    page_set = {v: k for k, v in PAGES.items()}
 
-    def fix(m):
-        attr, url = m.group(1), m.group(2)
+    def convert(url):
         if re.match(r'^(?:[a-z][a-z0-9+.-]*:|//|#)', url, re.I) or not url:
-            return m.group(0)
+            return url
         path, sep, frag = url.partition('#')
         path, qsep, query = path.partition('?')
         if not path:
-            return m.group(0)
+            return url
         target = posixpath.normpath(posixpath.join(fr_dir, path))
         if target in PAGES:
             target = PAGES[target]
         elif target == '.':
             target = PAGES['index.html']
-        out = rel(en, target)
-        return f'{attr}="{out}{qsep + query if qsep else ""}{sep + frag if sep else ""}"'
-    return ATTR_RE.sub(fix, html)
+        return rel(en, target) + (qsep + query if qsep else '') + (sep + frag if sep else '')
+
+    def fix(m):
+        return f'{m.group(1)}="{convert(m.group(2))}"'
+
+    def fix_srcset(m):
+        items = []
+        for part in m.group(2).split(','):
+            bits = part.strip().split(None, 1)
+            if bits:
+                items.append(' '.join([convert(bits[0])] + bits[1:]))
+        return f'{m.group(1)}="{", ".join(items)}"'
+
+    return SRCSET_RE.sub(fix_srcset, ATTR_RE.sub(fix, html))
 
 
 def main():
