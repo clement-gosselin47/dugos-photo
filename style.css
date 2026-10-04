@@ -16,19 +16,17 @@
   white-space: nowrap;
 }
 
+/* Mots = le logo découpé en deux : « Dugos » (avec son o-obturateur) à gauche,
+   « photographie » à droite */
 .pl__word--left {
-  font-family: 'DM Serif Display', Georgia, serif;
-  font-size: clamp(52px, 8vw, 130px);
-  letter-spacing: 0.05em;
+  width: clamp(150px, 24vw, 380px);
+  height: auto;
   justify-self: end;
 }
 
 .pl__word--right {
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
-  font-size: clamp(10px, 1.4vw, 22px);
-  font-weight: 300;
-  letter-spacing: 0.38em;
-  text-transform: uppercase;
+  width: clamp(110px, 17vw, 270px);
+  height: auto;
   justify-self: start;
 }
 
@@ -42,11 +40,17 @@
   aspect-ratio: 7 / 13;
   overflow: hidden;
   flex-shrink: 0;
+  background: #fff;
+  isolation: isolate;
 }
 
 .pl__img {
   position: absolute;
-  inset: 0;
+  /* 1 px de débord : le cadre (overflow:hidden) rogne le surplus, ce qui évite
+     le liseré clair/sombre que la largeur fractionnaire laissait sur le côté */
+  inset: -1px;
+  transform: translateZ(0);
+  background-repeat: no-repeat;
   opacity: 0;
   background-size: cover;
   background-position: center;

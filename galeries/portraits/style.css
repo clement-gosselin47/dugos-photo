@@ -533,20 +533,28 @@ body.flow-mode .footer { display: none; }
   color: var(--black);
   transition: transform 0.35s ease, opacity 0.35s ease, background 0.2s;
 }
+/* CTA : même bouton noir plein que « Envoyer » (Contact) et les CTA de À propos */
 .gallery-cta {
   right: 48px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 22px;
-  border-radius: 8px;
+  gap: 12px;
+  padding: 14px 32px;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
 }
+.gallery-cta:hover { opacity: 0.75; }
 .gallery-cta span { transition: transform 0.2s; }
 .gallery-cta:hover span { transform: translateX(4px); }
 .gallery-top {
@@ -570,6 +578,6 @@ body.flow-mode .footer { display: none; }
 }
 .gallery-top.is-off { display: none; }
 @media (max-width: 768px) {
-  .gallery-cta { right: 16px; bottom: 16px; padding: 10px 16px; font-size: 11px; }
+  .gallery-cta { right: 16px; bottom: 16px; padding: 12px 20px; font-size: 12px; }
   .gallery-top { bottom: 16px; }
 }
