@@ -16,6 +16,7 @@
   var assetsBase = script ? new URL('.', script.src).href : 'assets/';
   var MENU_PHOTO = 'menu-1.jpg';
 
+  var EN = document.documentElement.lang === 'en';
   var nav = document.querySelector('.nav');
   if (!nav) return;
   var links = nav.querySelector('.nav__links');
@@ -66,7 +67,7 @@
   var btn = document.createElement('button');
   btn.className = 'nav__toggle';
   btn.type = 'button';
-  btn.setAttribute('aria-label', 'Ouvrir le menu');
+  btn.setAttribute('aria-label', EN ? 'Open menu' : 'Ouvrir le menu');
   btn.setAttribute('aria-expanded', 'false');
   btn.setAttribute('aria-controls', links.id);
   btn.innerHTML = '<span></span><span></span><span></span>';
@@ -78,7 +79,7 @@
     if (open === nav.classList.contains('nav--open')) return;
     nav.classList.toggle('nav--open', open);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    btn.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    btn.setAttribute('aria-label', EN ? (open ? 'Close menu' : 'Open menu') : (open ? 'Fermer le menu' : 'Ouvrir le menu'));
     // Bloque le défilement de la page pendant que le menu plein écran est ouvert
     document.documentElement.style.overflow = open ? 'hidden' : '';
     document.body.style.overflow = open ? 'hidden' : '';

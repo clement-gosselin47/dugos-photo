@@ -1,11 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://clement-gosselin47.github.io/dugos-photo/</loc><lastmod>2026-09-09</lastmod><priority>1.0</priority></url>
-  <url><loc>https://clement-gosselin47.github.io/dugos-photo/galeries/</loc><lastmod>2026-09-09</lastmod><priority>0.8</priority></url>
-  <url><loc>https://clement-gosselin47.github.io/dugos-photo/galeries/mariages/</loc><lastmod>2026-09-09</lastmod><priority>0.9</priority></url>
-  <url><loc>https://clement-gosselin47.github.io/dugos-photo/galeries/portraits/</loc><lastmod>2026-09-09</lastmod><priority>0.9</priority></url>
-  <url><loc>https://clement-gosselin47.github.io/dugos-photo/a-propos/</loc><lastmod>2026-09-09</lastmod><priority>0.7</priority></url>
-  <url><loc>https://clement-gosselin47.github.io/dugos-photo/contact/</loc><lastmod>2026-09-09</lastmod><priority>0.8</priority></url>
-  <url><loc>https://clement-gosselin47.github.io/dugos-photo/mentions-legales/</loc><lastmod>2026-09-09</lastmod><priority>0.2</priority></url>
-  <url><loc>https://clement-gosselin47.github.io/dugos-photo/confidentialite/</loc><lastmod>2026-09-09</lastmod><priority>0.2</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/</loc><lastmod>2026-10-04</lastmod><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/en/</loc><lastmod>2026-10-04</lastmod><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/a-propos/</loc><lastmod>2026-10-04</lastmod><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/a-propos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/about/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/en/about/</loc><lastmod>2026-10-04</lastmod><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/a-propos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/about/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/contact/</loc><lastmod>2026-10-04</lastmod><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/contact/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/contact/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/en/contact/</loc><lastmod>2026-10-04</lastmod><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/contact/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/contact/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/galeries/</loc><lastmod>2026-10-04</lastmod><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/galeries/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/galleries/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/en/galleries/</loc><lastmod>2026-10-04</lastmod><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/galeries/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/galleries/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/galeries/mariages/</loc><lastmod>2026-10-04</lastmod><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/galeries/mariages/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/galleries/weddings/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/en/galleries/weddings/</loc><lastmod>2026-10-04</lastmod><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/galeries/mariages/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/galleries/weddings/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/galeries/portraits/</loc><lastmod>2026-10-04</lastmod><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/galeries/portraits/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/galleries/portraits/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/en/galleries/portraits/</loc><lastmod>2026-10-04</lastmod><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/galeries/portraits/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/galleries/portraits/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/mentions-legales/</loc><lastmod>2026-10-04</lastmod><priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/mentions-legales/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/legal-notice/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/en/legal-notice/</loc><lastmod>2026-10-04</lastmod><priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/mentions-legales/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/legal-notice/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/confidentialite/</loc><lastmod>2026-10-04</lastmod><priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/confidentialite/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/privacy/"/>
+  </url>
+  <url><loc>https://clement-gosselin47.github.io/dugos-photo/en/privacy/</loc><lastmod>2026-10-04</lastmod><priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clement-gosselin47.github.io/dugos-photo/confidentialite/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clement-gosselin47.github.io/dugos-photo/en/privacy/"/>
+  </url>
 </urlset>

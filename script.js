@@ -1,3 +1,9 @@
+// ---- Langue de la page (FR / EN) et racine du site ----
+// La version anglaise vit dans /en/ : reviews.json est donc cherché à côté de
+// script.js (racine du site), pas à côté de la page.
+const IS_EN = document.documentElement.lang === 'en';
+const SITE_ROOT = document.currentScript ? new URL('.', document.currentScript.src).href : '';
+
 // ---- Masque les images cassées (les placeholders restent visibles) ----
 (function () {
   document.querySelectorAll('img').forEach(img => {
@@ -426,11 +432,18 @@ function timeAgo(iso) {
   const t = Date.parse(iso);
   if (!t) return '';
   const days = Math.floor((Date.now() - t) / 864e5);
+  const w = Math.floor(days / 7), m = Math.floor(days / 30), y = Math.floor(days / 365);
+  if (IS_EN) {
+    if (days < 1) return 'today';
+    if (days < 7) return `${days} day${days > 1 ? 's' : ''} ago`;
+    if (days < 30) return `${w} week${w > 1 ? 's' : ''} ago`;
+    if (days < 365) return `${m} month${m > 1 ? 's' : ''} ago`;
+    return `${y} year${y > 1 ? 's' : ''} ago`;
+  }
   if (days < 1) return "aujourd'hui";
   if (days < 7) return `il y a ${days} jour${days > 1 ? 's' : ''}`;
-  if (days < 30) { const w = Math.floor(days / 7); return `il y a ${w} semaine${w > 1 ? 's' : ''}`; }
-  if (days < 365) return `il y a ${Math.floor(days / 30)} mois`;
-  const y = Math.floor(days / 365);
+  if (days < 30) return `il y a ${w} semaine${w > 1 ? 's' : ''}`;
+  if (days < 365) return `il y a ${m} mois`;
   return `il y a ${y} an${y > 1 ? 's' : ''}`;
 }
 const REVIEWS_SHOWN = 10;   // on ne montre que les avis les plus récents
@@ -465,7 +478,7 @@ function renderReviewText(r) {
   const isLong = full.length > REVIEW_MAX;
   textEl.textContent = (!isLong || reviewExpanded) ? full : truncateAtWord(full, REVIEW_MAX);
   moreBtn.hidden = !isLong;
-  moreBtn.textContent = reviewExpanded ? 'voir moins' : 'voir plus';
+  moreBtn.textContent = IS_EN ? (reviewExpanded ? 'read less' : 'read more') : (reviewExpanded ? 'voir moins' : 'voir plus');
 }
 
 function applyReview(index) {
@@ -509,7 +522,7 @@ document.querySelector('.testimonial__arrow--next')?.addEventListener('click', (
 // ---- Chargement des vrais avis + résumé (note, nombre, lien "laisser un avis") ----
 (async function () {
   try {
-    const res = await fetch('reviews.json', { cache: 'no-cache' });
+    const res = await fetch(SITE_ROOT + 'reviews.json', { cache: 'no-cache' });
     if (!res.ok) return;
     const data = await res.json();
 
@@ -539,10 +552,10 @@ document.querySelector('.testimonial__arrow--next')?.addEventListener('click', (
       const bigStar = document.querySelector('.testimonial__stars--lg');
       const ctaEl   = document.querySelector('.testimonial__cta');
 
-      if (data.rating && scoreEl) scoreEl.textContent = Number(data.rating).toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      if (data.rating && scoreEl) scoreEl.textContent = Number(data.rating).toLocaleString(IS_EN ? 'en-GB' : 'fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
       if (data.rating && bigStar) bigStar.textContent = starString(data.rating);
       if (data.count && allEl) {
-        allEl.textContent = `${data.count} avis Google`;
+        allEl.textContent = IS_EN ? `${data.count} Google reviews` : `${data.count} avis Google`;
         if (data.url) allEl.href = data.url;
       } else if (allEl && data.url) {
         allEl.href = data.url;

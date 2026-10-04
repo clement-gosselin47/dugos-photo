@@ -49,6 +49,7 @@
 })();
 
 // ---- Formspree submission ----
+const IS_EN = document.documentElement.lang === 'en';
 const form = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 const formSuccess = document.getElementById('formSuccess');
@@ -57,12 +58,12 @@ form?.addEventListener('submit', async e => {
   e.preventDefault();
   submitBtn.disabled = true;
   submitBtn.classList.add('loading');
-  submitBtn.querySelector('.btn__label').textContent = 'Envoi…';
+  submitBtn.querySelector('.btn__label').textContent = IS_EN ? 'Sending…' : 'Envoi…';
 
   const fail = () => {
     submitBtn.disabled = false;
     submitBtn.classList.remove('loading');
-    submitBtn.querySelector('.btn__label').textContent = 'Erreur — réessayer';
+    submitBtn.querySelector('.btn__label').textContent = IS_EN ? 'Error — please try again' : 'Erreur — réessayer';
   };
 
   try {

@@ -287,3 +287,45 @@
     letter-spacing: 0.04em !important;
   }
 }
+
+/* ============================================================================
+   Sélecteur de langue FR / EN (dans .nav__links, dernier élément)
+   ========================================================================== */
+.nav__lang {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  list-style: none;
+  font-family: var(--font-sans, 'IBM Plex Sans', system-ui, sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: inherit;
+}
+.nav__lang-link {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+a.nav__lang-link:hover { opacity: 1; }
+.nav__lang-link[aria-current="true"] { opacity: 1; font-weight: 500; }
+.nav__lang-sep { opacity: 0.3; }
+
+/* Avis Google : conservés dans leur langue d'origine sur la version anglaise */
+.testimonial__note {
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #8a8a8a;
+}
+
+@media (max-width: 768px) {
+  .nav__links li.nav__lang {
+    width: auto;
+    margin-top: 26px;
+    gap: 12px;
+    font-size: 15px;
+    color: #ffffff;
+  }
+}
