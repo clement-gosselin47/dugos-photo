@@ -410,8 +410,7 @@ if (hasGsap) {
 // (voir docs/AVIS-GOOGLE.md). Repli sur ces vrais avis si le fichier est absent.
 let reviews = [
   { author: 'Maurine Bardou', rating: 5, when: 'il y a un mois', text: 'Un immense merci à Laurent Dugos pour avoir immortalisé notre mariage d\'une manière aussi exceptionnelle ! Professionnalisme irréprochable, sympathique et à l\'écoute. Le résultat est tout simplement magnifique.' },
-  { author: 'Manon Vaninetti', rating: 5, when: 'il y a un mois', text: 'Un immense merci à Laurent qui a été le super photographe pour notre mariage du 11 juillet 2026. Dès notre rencontre, nous avons apprécié sa gentillesse, sa réactivité et son professionnalisme.' },
-  { author: 'Stephanie Barbe', rating: 5, when: 'il y a un mois', text: 'J\'ai fait appel à Laurent pour mon mariage. Très professionnel, à l\'écoute de son client, il prend des photos sur l\'instant sans qu\'on s\'en aperçoive et cela donne un super rendu. Je le recommande.' }
+  { author: 'Manon Vaninetti', rating: 5, when: 'il y a un mois', text: 'Un immense merci à Laurent qui a été le super photographe pour notre mariage du 11 juillet 2026. Dès notre rencontre, nous avons apprécié sa gentillesse, sa réactivité et son professionnalisme.' }
 ];
 
 let currentIndex = 0;
@@ -421,6 +420,20 @@ const starsEl  = document.querySelector('.testimonial__review-stars');
 const whenEl   = document.querySelector('.testimonial__when');
 
 const stripQuotes = s => String(s || '').replace(/^["“«\s]+|["”»\s]+$/g, '').trim();
+// « il y a 3 semaines » recalculé à partir de la date de publication (le texte
+// « il y a un mois » enregistré par Google se périme dès le lendemain)
+function timeAgo(iso) {
+  const t = Date.parse(iso);
+  if (!t) return '';
+  const days = Math.floor((Date.now() - t) / 864e5);
+  if (days < 1) return "aujourd'hui";
+  if (days < 7) return `il y a ${days} jour${days > 1 ? 's' : ''}`;
+  if (days < 30) { const w = Math.floor(days / 7); return `il y a ${w} semaine${w > 1 ? 's' : ''}`; }
+  if (days < 365) return `il y a ${Math.floor(days / 30)} mois`;
+  const y = Math.floor(days / 365);
+  return `il y a ${y} an${y > 1 ? 's' : ''}`;
+}
+const REVIEWS_SHOWN = 10;   // on ne montre que les avis les plus récents
 const starString = n => '★'.repeat(Math.max(0, Math.min(5, Math.round(n || 0)))).padEnd(5, '☆');
 
 // ---- Repli des avis longs : tous affichés à la même longueur, « … plus » pour dérouler
@@ -503,14 +516,19 @@ document.querySelector('.testimonial__arrow--next')?.addEventListener('click', (
     // Accepte l'ancien format (tableau simple) et le nouveau ({rating,count,url,writeUrl,items})
     const isLegacy = Array.isArray(data);
     const items = (isLegacy ? data : data.items) || [];
+    const seenText = new Set();
     const norm = items
+      .slice()
+      .sort((a, b) => Date.parse(b.publishTime || 0) - Date.parse(a.publishTime || 0))
       .map(r => ({
         author: r.author || r.name || 'Client',
         rating: r.rating || null,
-        when: r.when || '',
+        when: timeAgo(r.publishTime) || r.when || '',
         text: stripQuotes(r.text)
       }))
-      .filter(r => r.text.length > 10);
+      .filter(r => r.text.length > 10)
+      .filter(r => { const k = r.text.slice(0, 80).toLowerCase(); return !seenText.has(k) && seenText.add(k); })
+      .slice(0, REVIEWS_SHOWN);
 
     if (norm.length) { reviews = norm; currentIndex = 0; }
 

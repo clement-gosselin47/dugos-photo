@@ -332,12 +332,19 @@ window.addEventListener('resize', () => {
 
 // ---- Header + boutons Retour et Flow/Grid : masqués pendant le scroll, reviennent à l'arrêt ----
 (function () {
-  const els = [document.querySelector(".nav"), document.querySelector(".view-toggle"), document.querySelector(".gallery-back")].filter(Boolean);
+  const topBtn = document.getElementById("btnTop");
+  if (topBtn) topBtn.addEventListener("click", () => (window.smoothScroll ? window.smoothScroll.to(0) : window.scrollTo({ top: 0, behavior: "smooth" })));
+  // La flèche « remonter » n'a de sens qu'une fois la page descendue, en mode Grid
+  const syncTop = () => {
+    if (topBtn) topBtn.classList.toggle("is-off", document.body.classList.contains("flow-mode") || window.scrollY < 300);
+  };
+  const els = [document.querySelector(".nav"), document.querySelector(".view-toggle"), document.querySelector(".gallery-back"), document.querySelector(".gallery-cta"), topBtn].filter(Boolean);
   if (!els.length) return;
   let idleTimer = null;
   const show = () => els.forEach(el => el.classList.remove("nav--hidden"));
   const hide = () => els.forEach(el => el.classList.add("nav--hidden"));
   const onMove = () => {
+    syncTop();
     // En mode Flow, header et bouton restent toujours visibles ;
     // idem tout en haut de page en mode Grid
     if (document.body.classList.contains("flow-mode") || window.scrollY < 20) {
@@ -352,4 +359,7 @@ window.addEventListener('resize', () => {
   document.addEventListener("scroll", onMove, { capture: true, passive: true });
   window.addEventListener("wheel", onMove, { passive: true });
   window.addEventListener("touchmove", onMove, { passive: true });
+  syncTop();
+  // L'état initial (caché) est levé tout de suite : rien ne bouge au chargement
+  show();
 })();

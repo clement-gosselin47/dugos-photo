@@ -78,7 +78,7 @@ body {
 
 .nav__logo { text-decoration: none; display: flex; align-items: center; }
 /* Logo en blanc : il repose sur la photo sombre de gauche */
-.nav__logo-img { height: 44px; width: auto; display: block; object-fit: contain; filter: invert(1); }
+.nav__logo-img { height: 54px; width: auto; display: block; object-fit: contain; filter: invert(1); }
 .nav__links { display: flex; gap: 40px; list-style: none; }
 
 .nav__link {
@@ -416,7 +416,7 @@ body {
 /* Nav compacte sur petit écran : logo au-dessus, liens en dessous */
 @media (max-width: 480px) {
   .nav { flex-direction: column; gap: 10px; padding: 12px 16px; }
-  .nav__logo-img { height: 34px; }
+  .nav__logo-img { height: 42px; }
   .nav__links { gap: 14px; }
   .nav__link { font-size: 11px; letter-spacing: 0.04em; }
 }

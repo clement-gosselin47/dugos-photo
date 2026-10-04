@@ -148,7 +148,7 @@ img:not([src]), img[src=""] { display: none; }
 }
 
 .nav__logo-img {
-  height: 44px;
+  height: 54px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -924,7 +924,7 @@ img:not([src]), img[src=""] { display: none; }
 @media (max-width: 480px) {
   /* Nav compacte : logo au-dessus, liens en dessous */
   .nav { flex-direction: column; gap: 10px; padding: 12px 16px; }
-  .nav__logo-img { height: 34px; }
+  .nav__logo-img { height: 42px; }
   .nav__links { gap: 14px; }
   .nav__link { font-size: 11px; letter-spacing: 0.04em; }
   .hero { padding-top: 130px; }

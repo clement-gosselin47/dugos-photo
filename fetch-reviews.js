@@ -90,8 +90,12 @@ async function getPlace() {
   return place;
 }
 
-// Clé de dédoublonnage d'un avis
-const keyOf = r => `${(r.author || '').toLowerCase()}::${(r.text || '').slice(0, 80).toLowerCase()}`;
+// Clé de dédoublonnage d'un avis : le texte seul. Google renvoie parfois le même
+// avis sous deux noms d'auteur (ex. « Stéphanie ZAGO » / « Stephanie Barbe »).
+const keyOf = r => (r.text || '').replace(/\s+/g, ' ').slice(0, 80).toLowerCase();
+
+// Avis à ne jamais afficher (doublons déjà repérés)
+const EXCLUDED_AUTHORS = ['stephanie barbe'];
 
 function loadExistingItems() {
   try {
@@ -131,9 +135,12 @@ function loadExistingItems() {
 
   const existing = loadExistingItems();
   const seen = new Set(existing.map(keyOf));
+  const keys = new Set();
   const merged = [...fresh.filter(r => !seen.has(keyOf(r))), ...existing]
     .filter(r => (r.rating ?? 5) >= MIN_RATING && (r.text || '').length >= MIN_LENGTH)
+    .filter(r => !EXCLUDED_AUTHORS.includes((r.author || '').toLowerCase()))
     .sort((a, b) => new Date(b.publishTime || 0) - new Date(a.publishTime || 0))
+    .filter(r => !keys.has(keyOf(r)) && keys.add(keyOf(r)))
     .slice(0, KEEP_MAX);
 
   if (!merged.length) {
